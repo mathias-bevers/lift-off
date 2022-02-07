@@ -14,6 +14,8 @@ namespace GXPEngine {
 		}
 		Window _renderTarget;
 
+		public static Camera main = null;
+
 		/// <summary>
 		/// Creates a camera game object and a sub window to render to.
 		/// Add this camera as child to the object you want to follow, or 
@@ -56,7 +58,14 @@ namespace GXPEngine {
 			return TransformPoint(camX, camY);
 		}
 
-		protected override void OnDestroy() {
+        public override void AddChild(GameObject child)
+        {
+			main = this;
+			base.AddChild(child);
+        }
+
+        protected override void OnDestroy() {
+			if (main == this) main = null;
 			game.OnAfterRender -= _renderTarget.RenderWindow;
 		}
 	}

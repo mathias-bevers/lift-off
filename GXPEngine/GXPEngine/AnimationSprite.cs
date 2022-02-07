@@ -49,7 +49,7 @@ namespace GXPEngine
 		/// <param name="addCollider">
 		/// If <c>true</c>, this sprite will have a collider that will be added to the collision manager.
 		/// </param> 
-		public AnimationSprite (string filename, int cols, int rows, int frames=-1, bool keepInCache=false, bool addCollider=true) : base(filename,keepInCache,addCollider)
+		public AnimationSprite (string filename, int cols, int rows, int frames=-1, bool keepInCache=false) : base(filename,keepInCache)
 		{
 			name = filename;
 			initializeAnimFrames(cols, rows, frames);
@@ -76,7 +76,7 @@ namespace GXPEngine
 		/// <param name="addCollider">
 		/// If <c>true</c>, this sprite will have a collider that will be added to the collision manager.
 		/// </param> 
-		public AnimationSprite (System.Drawing.Bitmap bitmap, int cols, int rows, int frames=-1, bool addCollider=true) : base(bitmap,addCollider)
+		public AnimationSprite (System.Drawing.Bitmap bitmap, int cols, int rows, int frames=-1) : base(bitmap)
 		{
 			name = "BMP " + bitmap.Width + "x" + bitmap.Height;
 			initializeAnimFrames(cols, rows, frames);
@@ -268,7 +268,7 @@ namespace GXPEngine
 		/// The number of animation frames per second is [game.targetFps / _animationDelay].
 		/// </summary>
 		public void AnimateFixed() {
-			Animate(game.targetFps * Time.deltaTime / 1000f);
+			Animate(game.targetFps * Time.deltaTime);
 		}
 		
 		//------------------------------------------------------------------------------------------------------------------------

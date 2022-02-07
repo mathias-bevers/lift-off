@@ -25,6 +25,12 @@ namespace GXPEngine
 		public Transformable () {
 		}
 
+		public Vector2 position
+        {
+			get => new Vector2(x, y);
+			set => SetXY(value);
+        }
+
 		//------------------------------------------------------------------------------------------------------------------------
 		//														GetMatrix()
 		//------------------------------------------------------------------------------------------------------------------------		
@@ -90,6 +96,16 @@ namespace GXPEngine
 			_matrix[13] = y;
 		}
 
+		public void SetXY(Vector2 position)
+        {
+			SetXY(position.x, position.y);
+        }
+
+		public Vector2 InverseTransformPoint(Vector2 point)
+        {
+			return InverseTransformPoint(point.x, point.y);
+        }
+
 		//------------------------------------------------------------------------------------------------------------------------
 		//													InverseTransformPoint()
 		//------------------------------------------------------------------------------------------------------------------------
@@ -114,6 +130,11 @@ namespace GXPEngine
 			if (_scaleY != 0) ret.y = ((x * _matrix[4] + y * _matrix[5]) / _scaleY); else ret.y = 0;
 			return ret;
 		}
+
+		public Vector2 InverseTransformDirection(Vector2 direction)
+        {
+			return InverseTransformDirection(direction.x, direction.y);
+        }
 
 		/// <summary>
 		/// Transforms the direction vector (x,y) from the game's global space to this object's local space.
@@ -140,6 +161,10 @@ namespace GXPEngine
 			return Mathf.Sqrt(dx * dx + dy * dy);
 		}
 
+		public Vector2 TransformPoint(Vector2 point)
+        {
+			return TransformPoint(point.x, point.y);
+        }
 				
 		//------------------------------------------------------------------------------------------------------------------------
 		//														TransformPoint()
@@ -162,6 +187,11 @@ namespace GXPEngine
 			ret.y = (_matrix[1] * x * _scaleX + _matrix[5] * y * _scaleY + _matrix[13]);
 			return ret;
 		}
+
+		public Vector2 TransformDirection(Vector2 direction)
+        {
+			return TransformDirection(direction.x, direction.y);
+        }
 
 		/// <summary>
 		/// Transforms a direction vector (x,y) from this object's local space to the game's global space. 
@@ -187,6 +217,8 @@ namespace GXPEngine
 			get { return _rotation; }
 			set {
 				_rotation = value;
+				if (_rotation >= 360) _rotation -= Mathf.Floor(_rotation / 360) * 360;
+				if (_rotation <= -360) _rotation += Mathf.Floor((1 - _rotation) / 360) * 360;
 				float r = _rotation * Mathf.PI / 180.0f;
 				float cs = Mathf.Cos (r);
 				float sn = Mathf.Sin (r);
@@ -210,6 +242,12 @@ namespace GXPEngine
 			rotation = _rotation + angle;
 		}
 		
+
+		public void Move(Vector2 step)
+        {
+			Move(step.x, step.y);
+        }
+
 		//------------------------------------------------------------------------------------------------------------------------
 		//														Move()
 		//------------------------------------------------------------------------------------------------------------------------
@@ -230,6 +268,11 @@ namespace GXPEngine
 			_matrix[13] = (_matrix[13] + sn * stepX + cs * stepY);
 		}
 		
+		public void Translate(Vector2 step)
+        {
+			Translate(step.x, step.y);
+        }
+
 		//------------------------------------------------------------------------------------------------------------------------
 		//														Translate()
 		//------------------------------------------------------------------------------------------------------------------------
@@ -246,6 +289,8 @@ namespace GXPEngine
 			_matrix[12] += stepX;
 			_matrix[13] += stepY;
 		}
+
+
 		
 		//------------------------------------------------------------------------------------------------------------------------
 		//														SetScaleXY()
@@ -317,13 +362,13 @@ namespace GXPEngine
 		/// <value>
 		/// The scale.
 		/// </value>
-		public float scale {
+		public Vector2 scale {
 			get { 
-				return _scaleX; 
+				return new Vector2(scaleX, scaleY); 
 			}
 			set { 
-				_scaleX = value;
-				_scaleY = value; 
+				_scaleX = value.x;
+				_scaleY = value.y; 
 			}
 		}
 

@@ -8,7 +8,7 @@ namespace Mathias
 		public event Action DiedEvent;
 		public event Action<int> HealthChangedEvent;
 		public int CurrentHealth { get; private set; }
-		public int HealthNormalized => maxHealth / CurrentHealth;
+		public float HealthNormalized => (float)CurrentHealth/maxHealth;
 
 		private readonly int maxHealth;
 

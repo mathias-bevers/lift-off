@@ -4,13 +4,19 @@ namespace GXPEngine.Core
 {
 	public class BoxCollider : Collider
 	{
-		private Sprite _owner;
-		
+		//private Sprite _owner;
+
 		//------------------------------------------------------------------------------------------------------------------------
 		//														BoxCollider()
 		//------------------------------------------------------------------------------------------------------------------------		
-		public BoxCollider(Sprite owner) {
+		/*public BoxCollider(Sprite owner) {
 			_owner = owner;
+		}*/
+
+		public BoxCollider(Vector2 localPos, Vector2 localBounds, GameObject self)
+		{
+			selfIdentity = self;
+			SetExtends(localPos, localBounds);
 		}
 
 
@@ -19,9 +25,9 @@ namespace GXPEngine.Core
 		//------------------------------------------------------------------------------------------------------------------------		
 		public override bool HitTest (Collider other) {
 			if (other is BoxCollider) {
-				Vector2[] c = _owner.GetExtents();
+				Vector2[] c = extends;
 				if (c == null) return false;
-				Vector2[] d = ((BoxCollider)other)._owner.GetExtents();
+				Vector2[] d = ((BoxCollider)other).extends;
 				if (d == null) return false;
 				if (!areaOverlap(c, d)) return false;
 				return areaOverlap(d, c);
@@ -33,13 +39,15 @@ namespace GXPEngine.Core
 		//------------------------------------------------------------------------------------------------------------------------
 		//														HitTest()
 		//------------------------------------------------------------------------------------------------------------------------		
-		public override bool HitTestPoint (float x, float y) {
-			Vector2[] c = _owner.GetExtents();
+		public override bool HitTestPoint(float x, float y, bool ignoreTrigger = true)
+		{
+			if (ignoreTrigger) if (isTrigger) return false;
+			Vector2[] c = extends;
 			if (c == null) return false;
 			Vector2 p = new Vector2(x, y);
 			return pointOverlapsArea(p, c);
 		}
-		
+
 		//------------------------------------------------------------------------------------------------------------------------
 		//														areaOverlap()
 		//------------------------------------------------------------------------------------------------------------------------
@@ -126,9 +134,9 @@ namespace GXPEngine.Core
 		public override float TimeOfImpact (Collider other, float vx, float vy, out Vector2 normal) {
 			normal = new Vector2 ();
 			if (other is BoxCollider) {
-				Vector2[] c = _owner.GetExtents();
+				Vector2[] c = extends;
 				if (c == null) return float.MaxValue;
-				Vector2[] d = ((BoxCollider)other)._owner.GetExtents();
+				Vector2[] d = ((BoxCollider)other).extends;
 				if (d == null) return float.MaxValue;
 
 				float maxTOI = float.MinValue;
@@ -261,9 +269,9 @@ namespace GXPEngine.Core
 			Vector2 point=new Vector2();
 			if (other is BoxCollider) {
 				//Console.WriteLine ("\n\n===== Computing collision data:\n");
-				Vector2[] c = _owner.GetExtents();
+				Vector2[] c = extends;
 				if (c == null) return null;
-				Vector2[] d = ((BoxCollider)other)._owner.GetExtents();
+				Vector2[] d = ((BoxCollider)other).extends;
 				if (d == null) return null;
 
 				//Console.WriteLine ("\nSide vectors of this:\n {0},{1} and {2},{3}",
@@ -316,7 +324,7 @@ namespace GXPEngine.Core
 					point = _owner.parent.InverseTransformPoint (point.x, point.y);
 				}
 				*/
-				return new Collision(_owner, ((BoxCollider)other)._owner, normal, point, penetrationDepth);
+				return new Collision(selfIdentity, ((BoxCollider)other).selfIdentity, normal, point, penetrationDepth);
 			} else {
 				return null;
 			}

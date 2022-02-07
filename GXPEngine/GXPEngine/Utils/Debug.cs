@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-namespace Mathias.Utilities
+namespace GXPEngine
 {
 	/// <summary>
 	///     A helper class to make logging information to the console easier.

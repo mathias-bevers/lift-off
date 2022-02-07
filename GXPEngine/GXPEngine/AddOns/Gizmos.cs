@@ -68,6 +68,11 @@ namespace GXPEngine {
 			return (uint)(Mathf.Clamp(value, 0, 1) * 255);
 		}
 
+		public static void DrawLine(Vector2 pos1, Vector2 pos2, GameObject space = null, uint color = 0, byte width = 0)
+        {
+			DrawLine(pos1.x, pos1.y, pos2.x, pos2.y, space, color, width);
+        }
+
 		/// <summary>
 		/// You can call this method from anywhere. A (debug) line will be drawn from (x1,y1) to (x2,y2),
 		/// in the space of the given game object. 
