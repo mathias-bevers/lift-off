@@ -152,7 +152,7 @@ namespace GXPEngine
 		/// <summary>
 		/// Gets or sets the sprite's width in pixels.
 		/// </summary>
-		virtual public int width {
+		public virtual int width {
 			get { 
 				if (_texture != null) return (int)Math.Abs(_texture.width * _scaleX);
 				return 0;
