@@ -1,5 +1,4 @@
 ﻿using GXPEngine;
-using GXPEngine.Core;
 
 namespace Lavos
 {
@@ -8,46 +7,46 @@ namespace Lavos
 		private const float GRAVITY = 0.3f;
 		private const float JUMP_FORCE = 14.0f;
 		private const float MOVEMENT_SPEED = 3.0f; //TODO: needs testing whether this is to fast.
+		private bool isGrounded = false;
+		private float velocity = 0.0f;
 
-		private bool isGrounded;
-		private float velocity;
+		private int laneNumber = 1;
 
-		public Player(string fileName, int columns, int rows) : base(fileName, columns, rows) { SetCollider(); }
-
-		private void Update()
+		public Player(string fileName, int columns, int rows) : base(fileName, columns, rows)
 		{
-			Vector2 input = GetPlayerInput();
-
-			velocity += GRAVITY;
-
-			if (isGrounded && input.y > 0) { velocity -= JUMP_FORCE; }
-
-			isGrounded = false;
-
-			x += input.x * MOVEMENT_SPEED;
-
-			Collision other = MoveUntilCollision(0, velocity);
-			if (other == null) { return; }
-
-			velocity = 0;
-
-			if (other.normal.y < 0) { isGrounded = true; }
+			SetCollider();
+			x = game.width * 0.1f;
 		}
 
-		private static Vector2 GetPlayerInput()
+		//TODO: 3 lane movement.
+		//TODO: jump.
+
+		/// <summary>
+		///     Update is called by the engine. It handles the player's input.
+		/// </summary>
+		private void Update() { ProcessInput(); }
+
+
+		/// <summary>
+		///     Checks if the player has released the "w" or "s", then switches the player's lane.
+		/// </summary>
+		private void ProcessInput()
 		{
-			var horizontal = 0.0f;
-			var vertical = 0.0f;
+			if (Input.GetKeyUp(Key.W))
+			{
+				if (laneNumber == 2) { return; }
 
-			if (Input.GetKey(Key.W)) { vertical = 1; }
+				++laneNumber;
+			}
 
-			if (Input.GetKey(Key.A)) { horizontal = -1; }
+			if (Input.GetKeyUp(Key.S))
+			{
+				if (laneNumber == 0) { return; }
 
-			if (Input.GetKey(Key.S)) { vertical = -1; }
+				--laneNumber;
+			}
 
-			if (Input.GetKey(Key.D)) { horizontal = 1; }
-
-			return new Vector2(horizontal, vertical).normalized;
+			y = game.height - 66.67f - 133.33f * laneNumber - height;
 		}
 	}
 }
