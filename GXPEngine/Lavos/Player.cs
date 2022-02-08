@@ -25,10 +25,11 @@ namespace Lavos
 		private void Update()
 		{
 			ProcessVerticalInput();
+			ProcessHorizontalInput();
 
 			velocity += GRAVITY;
 
-			if (isGrounded && Input.GetKeyUp(Key.SPACE)) { velocity -= JUMP_FORCE; } //TODO: Smooth the jump.
+			if (isGrounded && Input.GetKeyDown(Key.SPACE)) { velocity -= JUMP_FORCE; }
 
 			isGrounded = false;
 
@@ -48,7 +49,7 @@ namespace Lavos
 		/// </summary>
 		private void ProcessVerticalInput()
 		{
-			if (Input.GetKeyUp(Key.W))
+			if (Input.GetKeyDown(Key.W))
 			{
 				if (laneNumber == 2) { return; }
 
@@ -56,12 +57,19 @@ namespace Lavos
 				y = CurrentLanePosition;
 			}
 
-			if (!Input.GetKeyUp(Key.S)) { return; }
+			if (!Input.GetKeyDown(Key.S)) { return; }
 
 			if (laneNumber == 0) { return; }
 
 			--laneNumber;
 			y = CurrentLanePosition;
+		}
+
+		private void ProcessHorizontalInput()
+		{
+			if (Input.GetKey(Key.A)) { x -= MOVEMENT_SPEED; }
+
+			if (Input.GetKey(Key.D)) { x += MOVEMENT_SPEED; }
 		}
 	}
 }
