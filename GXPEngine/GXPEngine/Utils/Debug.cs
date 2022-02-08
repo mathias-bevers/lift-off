@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-namespace GXPEngine
+namespace Mathias.Utilities
 {
 	/// <summary>
 	///     A helper class to make logging information to the console easier.
@@ -23,6 +23,7 @@ namespace GXPEngine
 
 		/// <summary>
 		///     Log a <paramref name="message" /> to the console with a gray-ish "[INFO]" tag in front of it.
+		///     It will also display the file name and line number to make debugging a bit easier.
 		/// </summary>
 		/// <param name="message">The text that has to be displayed in the console</param>
 		public static void Log(string message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string callerPath = null)

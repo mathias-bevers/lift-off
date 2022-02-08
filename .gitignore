@@ -1,0 +1,12 @@
+# Engine related files
+GXPEngine/obj
+GXPEngine.userprefs
+
+# IDE related files
+.vs
+.idea
+*.user
+
+# application and binary files
+*.exe
+*.pdb

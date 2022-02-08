@@ -1,34 +1,26 @@
-using System;									// System contains a lot of default C# libraries 
-using GXPEngine;                                // GXPEngine contains the engine
-using System.Drawing;							// System.Drawing contains drawing tools such as Color definitions
+using GXPEngine;
 
-public class MyGame : Game
+namespace Lavos
 {
-	public MyGame() : base(800, 600, false)		// Create a window that's 800x600 and NOT fullscreen
+	public class MyGame : Game
 	{
-		// Draw some things on a canvas:
-		EasyDraw canvas = new EasyDraw(800, 600);
-		canvas.Clear(Color.MediumPurple);
-		canvas.Fill(Color.Yellow);
-		canvas.Ellipse(width / 2, height / 2, 200, 200);
-		canvas.Fill(50);
-		canvas.TextSize(32);
-		canvas.TextAlign(CenterMode.Center, CenterMode.Center);
-		canvas.Text("Welcome!", width / 2, height / 2);
+		public static MyGame Instance => main as MyGame;
+		public Player Player { get; }
 
-		// Add the canvas to the engine to display it:
-		AddChild(canvas);
-		Console.WriteLine("MyGame initialized");
-	}
+		public MyGame() : base(800, 600, false)
+		{
+			var ground = new Sprite("square.png");
+			ground.width = width;
+			ground.SetXY(0, height - ground.height);
+			ground.SetCollider();
+			AddChild(ground);
 
-	// For every game object, Update is called every frame, by the engine:
-	void Update()
-	{
-		// Empty
-	}
+			Player = new Player("triangle.png", 1, 1);
+			AddChild(Player);
+		}
 
-	static void Main()							// Main() is the first method that's called when the program is run
-	{
-		new MyGame().Start();					// Create a "MyGame" and start it
+		private void Update() { }
+
+		private static void Main() { new MyGame().Start(); }
 	}
 }
