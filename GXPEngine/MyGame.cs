@@ -25,5 +25,14 @@ namespace Lavos
 		private void Update() { TimeSurvived = (float)Math.Round(Time.time / 1000.0f, 1); }
 
 		private static void Main() { new MyGame().Start(); }
+
+		public float GetLaneCenter(int laneNumber)
+		{
+			float halfScreen = height * 0.5f;
+			float laneSize = halfScreen / 3.0f;
+			float laneCenter = laneSize * 0.5f;
+
+			return game.height - laneCenter - (laneSize * laneNumber);
+		}
 	}
 }

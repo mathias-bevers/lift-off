@@ -7,9 +7,9 @@ namespace Lavos
 		private const float GRAVITY = 0.3f;
 		private const float JUMP_FORCE = 14.0f;
 		private const float MOVEMENT_SPEED = 3.0f; //TODO: needs testing whether this is to fast.
-		private float CurrentLanePosition => game.height - 66.67f - (133.33f * laneNumber) - height;
 
 		private bool isGrounded;
+		private float currentLanePosition;
 		private float velocity;
 		private int laneNumber = 1;
 
@@ -35,9 +35,9 @@ namespace Lavos
 
 			y += velocity;
 
-			if (y >= CurrentLanePosition)
+			if (y >= currentLanePosition)
 			{
-				y = CurrentLanePosition;
+				y = currentLanePosition;
 				velocity = 0;
 				isGrounded = true;
 			}
@@ -54,7 +54,8 @@ namespace Lavos
 				if (laneNumber == 2) { return; }
 
 				++laneNumber;
-				y = CurrentLanePosition;
+				currentLanePosition = MyGame.Instance.GetLaneCenter(laneNumber) - height;
+				y = currentLanePosition;
 			}
 
 			if (!Input.GetKeyDown(Key.S)) { return; }
@@ -62,7 +63,8 @@ namespace Lavos
 			if (laneNumber == 0) { return; }
 
 			--laneNumber;
-			y = CurrentLanePosition;
+			currentLanePosition = MyGame.Instance.GetLaneCenter(laneNumber) - height;
+			y = currentLanePosition;
 		}
 
 		private void ProcessHorizontalInput()
@@ -70,6 +72,8 @@ namespace Lavos
 			if (Input.GetKey(Key.A)) { x -= MOVEMENT_SPEED; }
 
 			if (Input.GetKey(Key.D)) { x += MOVEMENT_SPEED; }
+
+			x = Mathf.Clamp(x, 0, game.width - width);
 		}
 	}
 }

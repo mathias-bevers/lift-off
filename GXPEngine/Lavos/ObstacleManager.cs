@@ -6,16 +6,13 @@ namespace Lavos
 {
 	public class ObstacleManager : GameObject
 	{
-		private const int GROUND_HEIGHT = 64;
-		private EasyDraw easyDraw;
+		private const int LANES_COUNT = 3;
 
 		private readonly float spawnInterval = 5.0f;
 		private readonly float obstacleSpeed = 2.5f;
-		private readonly List<Sprite> obstacles = new();
 
 		private int lastSpawnTime;
-
-		public ObstacleManager() => easyDraw = new EasyDraw(200, 150);
+		private readonly List<Sprite> obstacles = new();
 
 		private void Update()
 		{
@@ -38,21 +35,24 @@ namespace Lavos
 				obstacle.Destroy();
 			}
 
-			if (MyGame.Instance.TimeSurvived < lastSpawnTime / 1000 + spawnInterval) { return; }
+			if (MyGame.Instance.TimeSurvived < (lastSpawnTime / 1000) + spawnInterval) { return; }
 
-			DeployObstacle();
+			DeployObstacles();
 		}
 
-		private void DeployObstacle()
+		private void DeployObstacles()
 		{
-			Debug.Log("Deploying obstacle");
+			Debug.Log("Deploying obstacles");
 
-			var obstacle = new Sprite("colors.png");
-			obstacle.SetCollider();
-			obstacle.collider.isTrigger = true;
-			obstacle.SetXY(game.width, game.height - GROUND_HEIGHT - obstacle.height);
-			obstacles.Add(obstacle);
-			AddChild(obstacle);
+			for (var i = 0; i < LANES_COUNT; i++)
+			{
+				var obstacle = new Sprite("colors.png");
+				obstacle.SetCollider();
+				obstacle.collider.isTrigger = true;
+				obstacle.SetXY(game.width, MyGame.Instance.GetLaneCenter(i) - obstacle.height);
+				obstacles.Add(obstacle);
+				AddChild(obstacle);
+			}
 
 			lastSpawnTime = Time.time;
 		}
