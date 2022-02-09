@@ -46,10 +46,7 @@ namespace Lavos
 
 			for (var i = 0; i < LANES_COUNT; i++)
 			{
-				var obstacle = new Sprite("colors.png");
-				obstacle.SetCollider();
-				obstacle.collider.isTrigger = true;
-				obstacle.SetXY(game.width, MyGame.Instance.GetLaneCenter(i) - obstacle.height);
+				var obstacle = new Obstacle("colors.png", i);
 				obstacles.Add(obstacle);
 				AddChild(obstacle);
 			}

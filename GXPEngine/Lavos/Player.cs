@@ -8,15 +8,18 @@ namespace Lavos
 		private const float JUMP_FORCE = 14.0f;
 		private const float MOVEMENT_SPEED = 3.0f; //TODO: needs testing whether this is to fast.
 
+		public int LaneNumber { get; private set; } = 1;
+
 		private bool isGrounded;
 		private float currentLanePosition;
 		private float velocity;
-		private int laneNumber = 1;
 
 		public Player(string fileName, int columns, int rows) : base(fileName, columns, rows)
 		{
 			SetCollider();
 			x = game.width * 0.1f;
+			currentLanePosition = MyGame.Instance.GetLaneCenter(LaneNumber) - height;
+			y = currentLanePosition;
 		}
 
 		/// <summary>
@@ -51,19 +54,19 @@ namespace Lavos
 		{
 			if (Input.GetKeyDown(Key.W))
 			{
-				if (laneNumber == 2) { return; }
+				if (LaneNumber == 2) { return; }
 
-				++laneNumber;
-				currentLanePosition = MyGame.Instance.GetLaneCenter(laneNumber) - height;
+				++LaneNumber;
+				currentLanePosition = MyGame.Instance.GetLaneCenter(LaneNumber) - height;
 				y = currentLanePosition;
 			}
 
 			if (!Input.GetKeyDown(Key.S)) { return; }
 
-			if (laneNumber == 0) { return; }
+			if (LaneNumber == 0) { return; }
 
-			--laneNumber;
-			currentLanePosition = MyGame.Instance.GetLaneCenter(laneNumber) - height;
+			--LaneNumber;
+			currentLanePosition = MyGame.Instance.GetLaneCenter(LaneNumber) - height;
 			y = currentLanePosition;
 		}
 
