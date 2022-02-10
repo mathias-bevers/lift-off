@@ -11,12 +11,13 @@ namespace GXPEngine
 	/// </summary>
 	public class Game : GameObject
 	{
+
 		internal static Game main = null;
 
 		private GLContext _glContext;
 
 		private UpdateManager _updateManager;
-		private CollisionManager _collisionManager;
+		public CollisionManager _collisionManager;
 
 		/// <summary>
 		/// Step delegate defines the signature of a method used for step callbacks, see OnBeforeStep, OnAfterStep.

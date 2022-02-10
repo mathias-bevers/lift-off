@@ -30,7 +30,7 @@ namespace GXPEngine
 		/// <param name="width">width in pixels</param>
 		/// <param name="height">height in pixels</param>
 		/// <param name="addCollider">whether the canvas should have a collider</param>
-		public EasyDraw (int width, int height, bool addCollider=true) : base (new Bitmap (width, height),addCollider)
+		public EasyDraw (int width, int height) : base (new Bitmap (width, height))
 		{
 			Initialize ();
 		}
@@ -40,7 +40,7 @@ namespace GXPEngine
 		/// </summary>
 		/// <param name="bitmap">The bitmap (image) that should be on the canvas</param>
 		/// <param name="addCollider">whether the canvas should have a collider</param>
-		public EasyDraw (System.Drawing.Bitmap bitmap, bool addCollider=true) : base (bitmap,addCollider)
+		public EasyDraw (System.Drawing.Bitmap bitmap) : base (bitmap)
 		{
 			Initialize ();
 		}
@@ -50,7 +50,7 @@ namespace GXPEngine
 		/// </summary>
 		/// <param name="filename">the name of the file that contains a sprite (png, jpg)</param>
 		/// <param name="addCollider">whether the canvas should have a collider</param>
-		public EasyDraw (string filename, bool addCollider=true) : base(filename,addCollider)
+		public EasyDraw (string filename) : base(filename)
 		{
 			Initialize ();
 		}

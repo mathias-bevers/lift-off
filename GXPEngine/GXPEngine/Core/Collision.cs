@@ -5,6 +5,8 @@
 	/// </summary>
 	public class Collision 
 	{
+		public static bool drawCollision = false;
+
 		public GameObject self,other;
 		public Vector2 normal;
 		public Vector2 point;

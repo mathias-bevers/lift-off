@@ -1,34 +1,68 @@
-using System;									// System contains a lot of default C# libraries 
-using GXPEngine;                                // GXPEngine contains the engine
-using System.Drawing;							// System.Drawing contains drawing tools such as Color definitions
+using System;
+using System.IO;
+using GXPEngine;
+using Mathias.Utilities;
 
-public class MyGame : Game
+namespace Lavos
 {
-	public MyGame() : base(800, 600, false)		// Create a window that's 800x600 and NOT fullscreen
+	public sealed class MyGame : Game
 	{
-		// Draw some things on a canvas:
-		EasyDraw canvas = new EasyDraw(800, 600);
-		canvas.Clear(Color.MediumPurple);
-		canvas.Fill(Color.Yellow);
-		canvas.Ellipse(width / 2, height / 2, 200, 200);
-		canvas.Fill(50);
-		canvas.TextSize(32);
-		canvas.TextAlign(CenterMode.Center, CenterMode.Center);
-		canvas.Text("Welcome!", width / 2, height / 2);
+		public readonly string scoreFilePath;
 
-		// Add the canvas to the engine to display it:
-		AddChild(canvas);
-		Console.WriteLine("MyGame initialized");
-	}
+		public static MyGame Instance => main as MyGame;
+		public Player Player { get; set; }
 
-	// For every game object, Update is called every frame, by the engine:
-	void Update()
-	{
-		// Empty
-	}
+		public MyGame() : base(1366, 800, false) //TODO: Check if the resolution is correct.
+		{
+			targetFps = 144;
+			SetVSync(false);
 
-	static void Main()							// Main() is the first method that's called when the program is run
-	{
-		new MyGame().Start();					// Create a "MyGame" and start it
+			var sceneManager = new SceneManager();
+			AddChild(sceneManager);
+			sceneManager.LoadScene("main-menu");
+
+			scoreFilePath = Directory.GetCurrentDirectory() + "\\high-scores.txt";
+		}
+
+		private void Update()
+		{
+			if (Input.GetKey(Key.ESCAPE)) { Destroy(); }
+		}
+
+		private static void Main()
+		{
+			new MyGame().Start();
+
+			Console.Write("Press enter to exit...");
+			Console.ReadLine();
+		}
+
+		public float GetLaneCenter(int laneNumber)
+		{
+			float halfScreen = height * 0.5f;
+			float laneSize = halfScreen / 3.0f;
+			float laneCenter = laneSize * 0.5f;
+
+			return game.height - laneCenter - (laneSize * laneNumber);
+		}
+
+		public void PlayerDied()
+		{
+			var gameScene = (GameScene)SceneManager.Instance.CurrentScene;
+			
+
+			if (!File.Exists(scoreFilePath))
+			{
+				using StreamWriter writer = File.CreateText(scoreFilePath);
+				writer.WriteLine(gameScene.Score);
+			}
+			else
+			{
+				using StreamWriter writer = File.AppendText(scoreFilePath);
+				writer.WriteLine(gameScene.Score);
+			}
+
+			SceneManager.Instance.LoadScene("game-over");
+		}
 	}
 }

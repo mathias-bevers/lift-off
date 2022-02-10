@@ -37,9 +37,19 @@ namespace GXPEngine
 		/// The delta time.
 		/// </value>
 		private static int previousFrameTime;
-		public static int deltaTime {
-			get { 
-				return previousFrameTime; 
+		public static float deltaTime
+		{
+			get
+			{
+				return (float)((double)previousFrameTime / 1000);
+			}
+		}
+
+		public static int deltaTimeMiliseconds
+		{
+			get
+			{
+				return previousFrameTime;
 			}
 		}
 

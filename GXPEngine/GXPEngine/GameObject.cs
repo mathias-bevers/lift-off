@@ -18,6 +18,8 @@ namespace GXPEngine
 		public bool visible = true;
 		private bool destroyed = false;
 
+		
+
 		//------------------------------------------------------------------------------------------------------------------------
 		//														GameObject()
 		//------------------------------------------------------------------------------------------------------------------------
@@ -30,11 +32,8 @@ namespace GXPEngine
 		/// If <c>true</c>, then the virtual function createCollider will be called, which can be overridden to create a collider that 
 		/// will be added to the collision manager. 
 		/// </param> 
-		public GameObject(bool addCollider=false)
+		public GameObject()
 		{
-			if (addCollider) {
-				_collider = createCollider ();
-			}
 		}
 
 		/// <summary>
@@ -64,10 +63,12 @@ namespace GXPEngine
 		//------------------------------------------------------------------------------------------------------------------------
 		//														collider
 		//------------------------------------------------------------------------------------------------------------------------
-		internal Collider collider {
+		internal Collider collider
+		{
 			get { return _collider; }
+			private set { _collider = value; }
 		}
-		
+
 		//------------------------------------------------------------------------------------------------------------------------
 		//														game
 		//------------------------------------------------------------------------------------------------------------------------
@@ -81,6 +82,26 @@ namespace GXPEngine
 				return Game.main;
 			}
 		}
+
+		public void RemoveCollider()
+        {
+			
+			game._collisionManager.Remove(this);
+			collider = null;
+		}
+
+		public virtual Collider SetCollider(Vector2 origin, Vector2 bounds)
+        {
+			if (collider == null)
+			{
+				collider = new BoxCollider(origin, bounds, this);
+            }
+            else
+            {
+				collider.SetExtends(origin, bounds);
+            }
+			return collider;
+        }
 
 		/// <summary>
 		/// Get all a list of all objects that currently overlap this one.
@@ -107,6 +128,7 @@ namespace GXPEngine
 		/// </param>
 		public virtual void Render(GLContext glContext) {
 			if (visible) {
+				collider?.DrawSelf();
 				glContext.PushMatrix(matrix);
 				
 				RenderSelf (glContext);
@@ -214,7 +236,7 @@ namespace GXPEngine
 		/// <param name='child'>
 		/// Child object to add.
 		/// </param>
-		public void AddChild(GameObject child) {
+		public virtual void AddChild(GameObject child) {
 			child.parent = this;	
 		}
 

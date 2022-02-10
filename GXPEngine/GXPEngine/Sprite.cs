@@ -30,7 +30,7 @@ namespace GXPEngine
 		/// <param name="addCollider">
 		/// If <c>true</c>, this sprite will have a collider that will be added to the collision manager.
 		/// </param> 
-		public Sprite (System.Drawing.Bitmap bitmap, bool addCollider=true) : base(addCollider)
+		public Sprite (System.Drawing.Bitmap bitmap) : base()
 		{
 			if (Game.main == null) {
 				throw new Exception ("Sprites cannot be created before creating a Game instance.");
@@ -39,12 +39,13 @@ namespace GXPEngine
 			initializeFromTexture(new Texture2D(bitmap));
 		}
 
-		public Sprite(Texture2D texture, bool addCollider = true) : base(addCollider) {
+		public Sprite(Texture2D texture) : base() {
 			if (Game.main == null) {
 				throw new Exception("Sprites cannot be created before creating a Game instance.");
 			}
 			name = "Sprite from " + texture.filename;
 			initializeFromTexture(texture);
+
 		}
 
 		//------------------------------------------------------------------------------------------------------------------------
@@ -73,7 +74,7 @@ namespace GXPEngine
 		/// <param name="addCollider">
 		/// If <c>true</c>, this sprite will have a collider that will be added to the collision manager.
 		/// </param> 
-		public Sprite (string filename, bool keepInCache=false, bool addCollider=true) : base(addCollider)
+		public Sprite (string filename, bool keepInCache=false) : base()
 		{
 			if (Game.main == null) {
 				throw new Exception ("Sprites cannot be created before creating a Game instance.");
@@ -82,10 +83,25 @@ namespace GXPEngine
 			initializeFromTexture(Texture2D.GetInstance(filename, keepInCache));
 		}
 
-		//------------------------------------------------------------------------------------------------------------------------
-		//														initializeFromTexture()
-		//------------------------------------------------------------------------------------------------------------------------
-		protected void initializeFromTexture (Texture2D texture) {
+		public Collider SetCollider()
+		{
+			return base.SetCollider(Vector2.Zero, new Vector2(_bounds.width, _bounds.height));
+		}
+
+		public Collider SetCollider(Vector2 origin)
+		{
+			return base.SetCollider(origin, new Vector2(_bounds.width, _bounds.height));
+		}
+
+		public override Collider SetCollider(Vector2 origin, Vector2 bounds)
+        {
+            return base.SetCollider(origin, bounds);
+        }
+
+        //------------------------------------------------------------------------------------------------------------------------
+        //														initializeFromTexture()
+        //------------------------------------------------------------------------------------------------------------------------
+        protected void initializeFromTexture (Texture2D texture) {
 			_texture = texture;
 			_bounds = new Rectangle(0, 0, _texture.width, _texture.height);
 			setUVs();
@@ -113,8 +129,9 @@ namespace GXPEngine
 		//------------------------------------------------------------------------------------------------------------------------
 		//														createCollider
 		//------------------------------------------------------------------------------------------------------------------------
-		protected override Collider createCollider() {
-			return new BoxCollider (this);
+		protected override Collider createCollider()
+		{
+			return new BoxCollider(Vector2.Zero, Vector2.Sprite, this);
 		}
 
 		//------------------------------------------------------------------------------------------------------------------------
@@ -135,7 +152,7 @@ namespace GXPEngine
 		/// <summary>
 		/// Gets or sets the sprite's width in pixels.
 		/// </summary>
-		virtual public int width {
+		public virtual int width {
 			get { 
 				if (_texture != null) return (int)Math.Abs(_texture.width * _scaleX);
 				return 0;

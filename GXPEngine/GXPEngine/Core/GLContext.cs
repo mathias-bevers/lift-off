@@ -197,7 +197,6 @@ namespace GXPEngine.Core {
             _soundSystem.Deinit();
             GL.glfwCloseWindow();
 			GL.glfwTerminate();
-			System.Environment.Exit(0);
 		}
 		
 		//------------------------------------------------------------------------------------------------------------------------

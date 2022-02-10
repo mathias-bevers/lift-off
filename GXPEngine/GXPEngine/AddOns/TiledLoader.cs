@@ -22,7 +22,7 @@ namespace TiledMapParser {
 		/// <summary>
 		/// Whether the newly generated sprites will have colliders.
 		/// </summary>
-		public bool addColliders;
+		//public bool addColliders;
 		/// <summary>
 		/// Set this to true if this TiledLoader should automatically create instances of a custom classes,
 		/// when LoadObjectLayers is called.
@@ -112,14 +112,13 @@ namespace TiledMapParser {
 		/// </summary>
 		/// <param name="filename">the name of the Tiled file (including .tmx extension).</param>
 		/// <param name="rootObject">start value for rootObject.</param>
-		/// <param name="addColliders">start value for addColliders.</param>
 		/// <param name="defaultOriginX">start value for defaultOriginX.</param>
 		/// <param name="defaultOriginY">start value for defaultOriginY.</param>
 		/// <param name="highQualityText">start value for highQualityText.</param>
 		/// <param name="autoInstance">start value for autoInstance.</param>
 		/// <param name="callback">A method to be called by the OnObjectCreated event.</param>
 		public TiledLoader(string filename,  
-			GameObject rootObject = null, bool addColliders = true,
+			GameObject rootObject = null,
 			float defaultOriginX = 0.5f, float defaultOriginY = 0.5f, 
 			bool highQualityText = true, bool autoInstance=false, ObjectCreateCallback callback=null) 
 		{
@@ -132,7 +131,6 @@ namespace TiledMapParser {
 			if (this.rootObject==null) {
 				this.rootObject=Game.main;
 			}
-			this.addColliders = addColliders;
 			this.autoInstance = autoInstance;
 			this.defaultOriginX = defaultOriginX;
 			this.defaultOriginY = defaultOriginY;
@@ -167,9 +165,9 @@ namespace TiledMapParser {
 		/// </summary>
 		/// <param name="obj">The Tiled (text) object</param>
 		/// <returns></returns>
-		public static EasyDraw CreateTextField(TiledObject obj, bool addCollider = true, bool highQualityText = true) {
+		public static EasyDraw CreateTextField(TiledObject obj, bool highQualityText = true) {
 			float scaleMultiplier = highQualityText ? 2 : 1; // 1=as is. 2=better antialiasing, but 4 x size
-			EasyDraw message = new EasyDraw((int)Mathf.Ceiling(obj.Width * scaleMultiplier), (int)Mathf.Ceiling(obj.Height * scaleMultiplier), addCollider);
+			EasyDraw message = new EasyDraw((int)Mathf.Ceiling(obj.Width * scaleMultiplier), (int)Mathf.Ceiling(obj.Height * scaleMultiplier));
 			// TODO: Cache fonts?
 
 			// Set Font:
@@ -251,7 +249,7 @@ namespace TiledMapParser {
 		/// <param name="normalizedOriginX">the new x-origin, normalized (=typically between 0 and 1)</param>
 		/// <param name="normalizedOriginY">the new y-origin, normalized (=typically between 0 and 1)</param>
 		public static void SetPositionRotationScaleOrigin(Sprite newSprite, TiledObject obj, float normalizedOriginX = 0.5f, float normalizedOriginY = 0.5f) {
-			newSprite.scale=1;
+			newSprite.scale=Vector2.One;
 			// SetOrigin according to Tiled's weird and inconsistent conventions:
 			float originY = obj.ImageID>=0 ? 1 : 0;
 			newSprite.SetOrigin(0, originY * newSprite.height);
@@ -375,7 +373,7 @@ namespace TiledMapParser {
 						}
 					}
 					if (anim==null) {
-						anim = new AnimationSprite(Path.Combine(_foldername, tileSet.Image.FileName), tileSet.Columns, tileSet.Rows, -1, false, addColliders);
+						anim = new AnimationSprite(Path.Combine(_foldername, tileSet.Image.FileName), tileSet.Columns, tileSet.Rows, -1, false);
 					}
 					anim.Mirror(obj.MirrorX, obj.MirrorY);
 					anim.SetFrame(frame);
@@ -383,7 +381,7 @@ namespace TiledMapParser {
 				} else if (obj.textField!=null) {
 					//Console.WriteLine("Creating text object: "+obj);
 
-					EasyDraw message = CreateTextField(obj, addColliders, highQualityText);
+					EasyDraw message = CreateTextField(obj, highQualityText);
 
 					DrawText(message, obj.textField.text);
 
@@ -433,7 +431,7 @@ namespace TiledMapParser {
 					AnimationSprite Tile = new AnimationSprite(
 						Path.Combine(_foldername, tileSet.Image.FileName),
 						tileSet.Columns, tileSet.Rows,
-						-1, false, addColliders
+						-1, false
 					);
 					Tile.SetFrame(frame-tileSet.FirstGId);
 					Tile.x = c * map.TileWidth;
@@ -453,7 +451,7 @@ namespace TiledMapParser {
 			if (map.ImageLayers.Length<=index) return;
 			ImageLayer layer = map.ImageLayers[index];
 			Console.WriteLine("Loading image: "+layer.Image);
-			Sprite image = new Sprite(Path.Combine(_foldername, layer.Image.FileName), false, addColliders);
+			Sprite image = new Sprite(Path.Combine(_foldername, layer.Image.FileName), false);
 			image.x=layer.offsetX;
 			image.y=layer.offsetY;
 			image.alpha=layer.Opacity;
