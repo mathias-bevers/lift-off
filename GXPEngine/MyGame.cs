@@ -1,11 +1,12 @@
 using System;
+using System.IO;
 using GXPEngine;
+using Mathias.Utilities;
 
 namespace Lavos
 {
 	public sealed class MyGame : Game
 	{
-		public float TimeSurvived { get; private set; }
 		public static MyGame Instance => main as MyGame;
 		public Player Player { get; set; }
 
@@ -21,8 +22,6 @@ namespace Lavos
 
 		private void Update()
 		{
-			TimeSurvived = (float)Math.Round(Time.time / 1000.0f, 1);
-
 			if (Input.GetKey(Key.ESCAPE)) { Destroy(); }
 		}
 
@@ -42,8 +41,27 @@ namespace Lavos
 
 			return game.height - laneCenter - (laneSize * laneNumber);
 		}
+
 		public void PlayerDied()
 		{
+			var gameScene = (GameScene)SceneManager.Instance.CurrentScene;
+
+			string filePath = Directory.GetCurrentDirectory() + "\\high-scores.txt";
+
+			if (!File.Exists(filePath))
+			{
+				using StreamWriter writer = File.CreateText(filePath);
+				writer.WriteLine(gameScene.Score);
+			}
+			else
+			{
+				using StreamWriter writer = File.AppendText(filePath);
+				writer.WriteLine(gameScene.Score);
+			}
+
+
+			Debug.Log($"Saved score to {filePath}.");
+
 			SceneManager.Instance.LoadScene("game-over");
 		}
 	}
