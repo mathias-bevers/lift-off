@@ -9,7 +9,7 @@ namespace Lavos
 		public static MyGame Instance => main as MyGame;
 		public Player Player { get; set; }
 
-		public MyGame() : base(1366, 800, false) //TODO: check if the resolution is correct.
+		public MyGame() : base(1366, 800, false) //TODO: Check if the resolution is correct.
 		{
 			targetFps = 144;
 			SetVSync(false);
@@ -41,6 +41,10 @@ namespace Lavos
 			float laneCenter = laneSize * 0.5f;
 
 			return game.height - laneCenter - (laneSize * laneNumber);
+		}
+		public void PlayerDied()
+		{
+			SceneManager.Instance.LoadScene("game-over");
 		}
 	}
 }

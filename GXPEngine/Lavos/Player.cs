@@ -5,8 +5,9 @@ namespace Lavos
 	public class Player : AnimationSprite
 	{
 		private const float GRAVITY = 0.3f;
-		private const float JUMP_FORCE = 14.0f;
-		private const float MOVEMENT_SPEED = 3.0f; //TODO: needs testing whether this is to fast.
+		//TODO: Test movement variables.
+		private const float JUMP_FORCE = 14.0f; 
+		private const float MOVEMENT_SPEED = 3.0f;
 
 		public int LaneNumber { get; private set; } = 1;
 
@@ -48,7 +49,7 @@ namespace Lavos
 
 
 		/// <summary>
-		///     Checks if the player has released the "w" or "s", then switches the player's lane.
+		///     Checks if the player has pressed the "w" or "s", then switches the player's lane.
 		/// </summary>
 		private void ProcessVerticalInput()
 		{

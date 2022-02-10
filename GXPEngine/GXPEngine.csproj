@@ -47,10 +47,12 @@
     <Compile Include="GXPEngine\AddOns\SpriteBatch.cs" />
     <Compile Include="GXPEngine\AddOns\TiledLoader.cs" />
     <Compile Include="GXPEngine\Utils\Debug.cs" />
+    <Compile Include="Lavos\BaseClasses\Scene.cs" />
     <Compile Include="Lavos\Obstacle.cs" />
     <Compile Include="Lavos\ObstacleManager.cs" />
     <Compile Include="Lavos\SceneManager.cs" />
     <Compile Include="Lavos\Button.cs" />
+    <Compile Include="Lavos\Scenes\GameOverScene.cs" />
     <Compile Include="Lavos\Scenes\GameScene.cs" />
     <Compile Include="Lavos\Scenes\MainMenuScene.cs" />
     <Compile Include="Lavos\Utilities\EnumExtensions.cs" />
@@ -94,7 +96,5 @@
     <Compile Include="GXPEngine\SoLoud\SoloudSoundSystem.cs" />
     <Compile Include="Lavos\Player.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Lavos\BaseClasses\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>

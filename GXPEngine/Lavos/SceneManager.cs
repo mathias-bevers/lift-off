@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
+﻿using System.Linq;
 using GXPEngine;
 using Mathias.Utilities;
 
@@ -9,6 +7,8 @@ namespace Lavos
 	public class SceneManager : GameObject
 	{
 		private static SceneManager _instance;
+
+		public Scene CurrentScene { get; private set; }
 
 		public static SceneManager Instance
 		{
@@ -32,27 +32,30 @@ namespace Lavos
 			_instance = this;
 		}
 
-		public string CurrentSceneName = string.Empty;
-
 		public void LoadScene(string sceneName)
 		{
-			foreach (GameObject child in MyGame.Instance.GetChildren())
-			{
-				if (child == this) { continue; }
-
-				child.Destroy();
-			}
+			foreach (GameObject child in MyGame.Instance.GetChildren().Where(child => child != this)) { child.Destroy(); }
 
 			switch (sceneName)
 			{
 				case "game":
-					game.AddChild(new GameScene());
-					CurrentSceneName = sceneName;
+					var gameScene = new GameScene();
+					CurrentScene = gameScene;
+					game.AddChild(gameScene);
 					break;
+
 				case "main-menu":
-					game.Add(new MainMenuScene());
-					CurrentSceneName = sceneName;
+					var menuScene = new MainMenuScene();
+					CurrentScene = menuScene;
+					game.AddChild(menuScene);
 					break;
+
+				case "game-over":
+					var gameOverScene = new GameOverScene();
+					CurrentScene = gameOverScene;
+					game.AddChild(gameOverScene);
+					break;
+
 				default:
 					Debug.LogError($"\"{sceneName}\" is not a valid scene name.");
 					game.Destroy();
