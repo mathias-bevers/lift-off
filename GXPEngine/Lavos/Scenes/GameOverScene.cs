@@ -15,8 +15,6 @@ namespace Lavos
 
 		public override void Start()
 		{
-			//TODO: Display three highest scores.
-
 			var buttonSize = new Vector2(140, 40);
 
 			var replayButton = new Button("White1x1.png", buttonSize, "Replay", new Vector2(271.5f, 366));
@@ -39,7 +37,8 @@ namespace Lavos
 			playerScore.Text($"You scored {scores.Last():n2}");
 			AddChild(playerScore);
 
-			Array.Reverse(scores);
+			Array.Sort(scores);
+			Array.Reverse(scores); 
 
 			var scoreTextSize = new Vector2(200, 40);
 			float startY = (game.height * 0.5f) - (scoreTextSize.y * 0.5f); // Placed in the middle of the screen.
