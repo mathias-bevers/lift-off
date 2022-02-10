@@ -7,5 +7,7 @@ namespace Lavos
 		public abstract string Name { get; protected set; }
 
 		public abstract void Start();
+
+		public virtual void OnOffload() { }
 	}
 }

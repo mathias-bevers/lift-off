@@ -34,6 +34,8 @@ namespace Lavos
 
 		public void LoadScene(string sceneName)
 		{
+			CurrentScene?.OnOffload();
+
 			foreach (GameObject child in MyGame.Instance.GetChildren().Where(child => child != this)) { child.Destroy(); }
 
 			switch (sceneName)

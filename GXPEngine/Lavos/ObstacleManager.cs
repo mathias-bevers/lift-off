@@ -10,7 +10,7 @@ namespace Lavos
 
 		private readonly List<Obstacle> obstacles = new();
 
-		public float ObstacleSpeed { get; private set; } = 2.25f;
+		public float ObstacleSpeed { get; private set; } = 6.25f;
 
 		private float spawnInterval;
 		private int lastSpawnTime;
@@ -42,8 +42,7 @@ namespace Lavos
 				obstacle.Destroy();
 			}
 
-			float timeSurvived = ((GameScene)SceneManager.Instance.CurrentScene).TimeSurvived / 1000.0f;
-			if (timeSurvived < (lastSpawnTime / 1000) + spawnInterval) { return; }
+			if(pendingDestroy.Count == 0) {return;}
 
 			DeployObstacles();
 		}
