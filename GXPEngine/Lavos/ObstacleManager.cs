@@ -11,13 +11,14 @@ namespace Lavos
 
 		private readonly List<Sprite> obstacles = new();
 
+		public float ObstacleSpeed { get; private set; } = 2.25f;
+
 		private float spawnInterval;
-		private float obstacleSpeed = 2.25f; 
 		private int lastSpawnTime;
 
 		public ObstacleManager()
 		{
-			spawnInterval = game.width / (obstacleSpeed * game.targetFps);
+			spawnInterval = game.width / (ObstacleSpeed * game.targetFps);
 			DeployObstacles();
 		}
 
@@ -33,7 +34,7 @@ namespace Lavos
 					continue;
 				}
 
-				obstacle.x -= obstacleSpeed;
+				obstacle.x -= ObstacleSpeed;
 			}
 
 			foreach (Sprite obstacle in pendingDestroy)
@@ -52,8 +53,6 @@ namespace Lavos
 		{
 			if (obstacles.Count >= 3) { return; } // Make sure there is only one line of obstacles at the time.
 
-			Debug.Log($"speed: {obstacleSpeed:n2}\t interval: {spawnInterval}.");
-
 			for (var i = 0; i < LANES_COUNT; i++)
 			{
 				var obstacle = new Obstacle("colors.png", i);
@@ -61,9 +60,9 @@ namespace Lavos
 				AddChild(obstacle);
 			}
 
-			obstacleSpeed += SPEED_UP_INCREMENT;
+			ObstacleSpeed += SPEED_UP_INCREMENT;
 
-			spawnInterval = game.width / (obstacleSpeed * game.currentFps);
+			spawnInterval = game.width / (ObstacleSpeed * game.currentFps);
 
 			lastSpawnTime = Time.time;
 		}

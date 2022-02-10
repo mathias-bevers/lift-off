@@ -49,6 +49,10 @@
     <Compile Include="GXPEngine\Utils\Debug.cs" />
     <Compile Include="Lavos\Obstacle.cs" />
     <Compile Include="Lavos\ObstacleManager.cs" />
+    <Compile Include="Lavos\SceneManager.cs" />
+    <Compile Include="Lavos\Button.cs" />
+    <Compile Include="Lavos\Scenes\GameScene.cs" />
+    <Compile Include="Lavos\Scenes\MainMenuScene.cs" />
     <Compile Include="Lavos\Utilities\EnumExtensions.cs" />
     <Compile Include="MyGame.cs" />
     <Compile Include="GXPEngine\Core\Canvas.cs" />
@@ -90,5 +94,7 @@
     <Compile Include="GXPEngine\SoLoud\SoloudSoundSystem.cs" />
     <Compile Include="Lavos\Player.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Lavos\BaseClasses\" />
+  </ItemGroup>
 </Project>
