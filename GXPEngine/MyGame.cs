@@ -11,6 +11,9 @@ namespace Lavos
 
 		public MyGame() : base(1366, 800, false) //TODO: check if the resolution is correct.
 		{
+			targetFps = 144;
+			SetVSync(false);
+
 			var ground = new Sprite("ground-temp.png");
 			ground.SetXY(0, height - ground.height);
 			ground.SetCollider();
@@ -22,9 +25,23 @@ namespace Lavos
 			AddChild(new ObstacleManager());
 		}
 
-		private void Update() { TimeSurvived = (float)Math.Round(Time.time / 1000.0f, 1); }
+		private void Update()
+		{
+			TimeSurvived = (float)Math.Round(Time.time / 1000.0f, 1);
 
-		private static void Main() { new MyGame().Start(); }
+			if (Input.GetKey(Key.ESCAPE))
+			{
+				Destroy();
+			}
+		}
+
+		private static void Main()
+		{
+			new MyGame().Start(); 
+			
+			Console.Write("Press enter to exit...");
+			Console.ReadLine();
+		}
 
 		public float GetLaneCenter(int laneNumber)
 		{
