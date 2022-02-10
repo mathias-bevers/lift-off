@@ -7,6 +7,8 @@ namespace Lavos
 {
 	public sealed class MyGame : Game
 	{
+		public readonly string scoreFilePath;
+
 		public static MyGame Instance => main as MyGame;
 		public Player Player { get; set; }
 
@@ -18,6 +20,8 @@ namespace Lavos
 			var sceneManager = new SceneManager();
 			AddChild(sceneManager);
 			sceneManager.LoadScene("main-menu");
+
+			scoreFilePath = Directory.GetCurrentDirectory() + "\\high-scores.txt";
 		}
 
 		private void Update()
@@ -45,22 +49,21 @@ namespace Lavos
 		public void PlayerDied()
 		{
 			var gameScene = (GameScene)SceneManager.Instance.CurrentScene;
+			
 
-			string filePath = Directory.GetCurrentDirectory() + "\\high-scores.txt";
-
-			if (!File.Exists(filePath))
+			if (!File.Exists(scoreFilePath))
 			{
-				using StreamWriter writer = File.CreateText(filePath);
+				using StreamWriter writer = File.CreateText(scoreFilePath);
 				writer.WriteLine(gameScene.Score);
 			}
 			else
 			{
-				using StreamWriter writer = File.AppendText(filePath);
+				using StreamWriter writer = File.AppendText(scoreFilePath);
 				writer.WriteLine(gameScene.Score);
 			}
 
 
-			Debug.Log($"Saved score to {filePath}.");
+			Debug.Log($"Saved score to {scoreFilePath}.");
 
 			SceneManager.Instance.LoadScene("game-over");
 		}

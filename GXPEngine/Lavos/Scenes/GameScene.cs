@@ -31,6 +31,8 @@ namespace Lavos
 			AddChild(obstacleManager);
 
 			scoreText = new EasyDraw(200, 50);
+			scoreText.TextAlign(CenterMode.Min, CenterMode.Min);
+			scoreText.SetXY(10, 10);
 			AddChild(scoreText);
 
 			startTime = Time.time;
@@ -40,11 +42,6 @@ namespace Lavos
 		{
 			TimeSurvived = Time.time - startTime;
 			scoreText.Text($"Score: {Score:n2}", true);
-		}
-
-		public override void OnOffload()
-		{
-			Debug.Log($"Speed on death: {obstacleManager.ObstacleSpeed}");
 		}
 	}
 }
