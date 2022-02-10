@@ -49,8 +49,6 @@ namespace Lavos
 
 		private void DeployObstacles()
 		{
-			if (obstacles.Count >= 3) { return; } // Make sure there is only one line of obstacles at the time.
-
 			for (var i = 0; i < LANES_COUNT; i++)
 			{
 				var obstacle = new Obstacle("colors.png", i);

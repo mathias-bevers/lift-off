@@ -10,3 +10,6 @@ GXPEngine.userprefs
 # application and binary files
 *.exe
 *.pdb
+
+# Highscore file
+GXPEngine/bin/Debug/high-scores.txt

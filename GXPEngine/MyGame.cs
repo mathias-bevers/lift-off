@@ -62,9 +62,6 @@ namespace Lavos
 				writer.WriteLine(gameScene.Score);
 			}
 
-
-			Debug.Log($"Saved score to {scoreFilePath}.");
-
 			SceneManager.Instance.LoadScene("game-over");
 		}
 	}
