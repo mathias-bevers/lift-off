@@ -7,38 +7,29 @@ namespace Lavos
 	{
 		public float TimeSurvived { get; private set; }
 		public static MyGame Instance => main as MyGame;
-		public Player Player { get; }
+		public Player Player { get; set; }
 
-		public MyGame() : base(1366, 800, false) //TODO: check if the resolution is correct.
+		public MyGame() : base(1366, 800, false) //TODO: Check if the resolution is correct.
 		{
 			targetFps = 144;
 			SetVSync(false);
 
-			var ground = new Sprite("ground-temp.png");
-			ground.SetXY(0, height - ground.height);
-			ground.SetCollider();
-			AddChild(ground);
-
-			Player = new Player("triangle.png", 1, 1);
-			AddChild(Player);
-
-			AddChild(new ObstacleManager());
+			var sceneManager = new SceneManager();
+			AddChild(sceneManager);
+			sceneManager.LoadScene("main-menu");
 		}
 
 		private void Update()
 		{
 			TimeSurvived = (float)Math.Round(Time.time / 1000.0f, 1);
 
-			if (Input.GetKey(Key.ESCAPE))
-			{
-				Destroy();
-			}
+			if (Input.GetKey(Key.ESCAPE)) { Destroy(); }
 		}
 
 		private static void Main()
 		{
-			new MyGame().Start(); 
-			
+			new MyGame().Start();
+
 			Console.Write("Press enter to exit...");
 			Console.ReadLine();
 		}
@@ -50,6 +41,10 @@ namespace Lavos
 			float laneCenter = laneSize * 0.5f;
 
 			return game.height - laneCenter - (laneSize * laneNumber);
+		}
+		public void PlayerDied()
+		{
+			SceneManager.Instance.LoadScene("game-over");
 		}
 	}
 }

@@ -35,7 +35,7 @@ namespace Lavos
 
 				if (player.LaneNumber != laneNumber) { continue; }
 
-				game.Destroy(); //TODO: make game over scene.
+				MyGame.Instance.PlayerDied();
 				return;
 			}
 		}

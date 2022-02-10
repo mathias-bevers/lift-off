@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using GXPEngine;
-using Mathias.Utilities;
 
 namespace Lavos
 {
@@ -9,23 +8,24 @@ namespace Lavos
 		private const float SPEED_UP_INCREMENT = 0.25f;
 		private const int LANES_COUNT = 3;
 
-		private readonly List<Sprite> obstacles = new();
+		private readonly List<Obstacle> obstacles = new();
+
+		public float ObstacleSpeed { get; private set; } = 2.25f;
 
 		private float spawnInterval;
-		private float obstacleSpeed = 2.25f; 
 		private int lastSpawnTime;
 
 		public ObstacleManager()
 		{
-			spawnInterval = game.width / (obstacleSpeed * game.targetFps);
+			spawnInterval = game.width / (ObstacleSpeed * game.targetFps);
 			DeployObstacles();
 		}
 
 		private void Update()
 		{
-			var pendingDestroy = new List<Sprite>();
+			var pendingDestroy = new List<Obstacle>();
 
-			foreach (Sprite obstacle in obstacles)
+			foreach (Obstacle obstacle in obstacles)
 			{
 				if (obstacle.x < -obstacle.width)
 				{
@@ -33,17 +33,17 @@ namespace Lavos
 					continue;
 				}
 
-				obstacle.x -= obstacleSpeed;
+				obstacle.x -= ObstacleSpeed;
 			}
 
-			foreach (Sprite obstacle in pendingDestroy)
+			foreach (Obstacle obstacle in pendingDestroy)
 			{
 				obstacles.Remove(obstacle);
 				obstacle.Destroy();
 			}
 
-
-			if (MyGame.Instance.TimeSurvived < (lastSpawnTime / 1000) + spawnInterval) { return; }
+			float timeSurvived = ((GameScene)SceneManager.Instance.CurrentScene).TimeSurvived / 1000.0f;
+			if (timeSurvived < (lastSpawnTime / 1000) + spawnInterval) { return; }
 
 			DeployObstacles();
 		}
@@ -52,8 +52,6 @@ namespace Lavos
 		{
 			if (obstacles.Count >= 3) { return; } // Make sure there is only one line of obstacles at the time.
 
-			Debug.Log($"speed: {obstacleSpeed:n2}\t interval: {spawnInterval}.");
-
 			for (var i = 0; i < LANES_COUNT; i++)
 			{
 				var obstacle = new Obstacle("colors.png", i);
@@ -61,9 +59,9 @@ namespace Lavos
 				AddChild(obstacle);
 			}
 
-			obstacleSpeed += SPEED_UP_INCREMENT;
+			ObstacleSpeed += SPEED_UP_INCREMENT;
 
-			spawnInterval = game.width / (obstacleSpeed * game.currentFps);
+			spawnInterval = game.width / (ObstacleSpeed * game.currentFps);
 
 			lastSpawnTime = Time.time;
 		}
