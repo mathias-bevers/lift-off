@@ -35,25 +35,21 @@ namespace Lavos
 		{
 			if (new Random().Next(0, 2) != 0)
 			{
-				var obstacle = new Obstacle("checkers.png", laneNumber, DeployableSpeed);
+				var obstacle = new Obstacle("circle.png", laneNumber, DeployableSpeed);
 				obstacle.OnDestroyed += OnDeployableDestroy;
 				AddChild(obstacle);
-
-				Debug.Log($"Deployed obstacle as nr{objectsDeployed}.");
 			}
 			else
 			{
 				var obstacle = new Pickup("colors.png", laneNumber, DeployableSpeed);
 				obstacle.OnDestroyed += OnDeployableDestroy;
 				AddChild(obstacle);
-
-				Debug.Log($"Deployed pickup as nr{objectsDeployed}.");
 			}
 
 			++lanes[laneNumber];
 			++objectsDeployed;
 
-			if (objectsDeployed % 2 != 3) { return; }
+			if (objectsDeployed % 3 != 0) { return; }
 
 			DeployableSpeed += SPEED_UP_INCREMENT;
 		}
@@ -67,7 +63,7 @@ namespace Lavos
 		private void OnTimer(object source, ElapsedEventArgs data)
 		{
 			TryDeployment(new Random().Next(0, LANES_COUNT));
-			timer.Interval = SpawnInterval;
+			timer.Interval = SpawnInterval * 1000;
 
 			void TryDeployment(int laneNumber)
 			{
