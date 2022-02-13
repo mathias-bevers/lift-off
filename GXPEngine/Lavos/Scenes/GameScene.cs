@@ -7,7 +7,7 @@ namespace Lavos
 	public class GameScene : Scene
 	{
 		public int TimeSurvived { get; private set; }
-		public float Score => TimeSurvived / 1000.0f * (obstacleManager.ObstacleSpeed - (obstacleManager.ObstacleSpeed - 1.0f));
+		public float Score => TimeSurvived / 1000.0f * (obstacleManager.DeployableSpeed - (obstacleManager.DeployableSpeed - 1.0f));
 
 		public override string Name { get; protected set; } = "game";
 
