@@ -10,6 +10,7 @@ namespace Lavos
 		private const float MOVEMENT_SPEED = 3.0f;
 
 		public int LaneNumber { get; private set; } = 1;
+		public Deployable.Color? CurrentItemColor { get; set; } = null;
 
 		private bool isGrounded;
 		private float currentLanePosition;

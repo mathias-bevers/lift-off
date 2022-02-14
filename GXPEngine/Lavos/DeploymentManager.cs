@@ -4,7 +4,7 @@ using GXPEngine;
 
 namespace Lavos
 {
-	public class ObstacleManager : GameObject
+	public class DeploymentManager : GameObject
 	{
 		private const float SPEED_UP_INCREMENT = 0.25f;
 		private const int LANES_COUNT = 3;
@@ -17,7 +17,7 @@ namespace Lavos
 
 		private int objectsDeployed;
 
-		public ObstacleManager()
+		public DeploymentManager()
 		{
 			for (var i = 0; i < LANES_COUNT; i++) { lanes.Add(i, 0); }
 		}
@@ -35,20 +35,19 @@ namespace Lavos
 		{
 			if (new Random().Next(0, 2) != 0)
 			{
-				var obstacle = new Obstacle("circle.png", laneNumber, DeployableSpeed);
+				var obstacle = new Obstacle(laneNumber, DeployableSpeed);
 				obstacle.OnDestroyed += OnDeployableDestroy;
 				AddChild(obstacle);
 			}
 			else
 			{
-				var obstacle = new Pickup("colors.png", laneNumber, DeployableSpeed);
+				var obstacle = new Pickup(laneNumber, DeployableSpeed);
 				obstacle.OnDestroyed += OnDeployableDestroy;
 				AddChild(obstacle);
 			}
 
 			++lanes[laneNumber];
 			++objectsDeployed;
-
 			if (objectsDeployed % 3 != 0) { return; }
 
 			DeployableSpeed += SPEED_UP_INCREMENT;

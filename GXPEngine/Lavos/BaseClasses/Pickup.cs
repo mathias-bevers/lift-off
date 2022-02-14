@@ -1,19 +1,25 @@
-﻿using Mathias.Utilities;
+﻿using System;
+using Mathias.Utilities;
 
 namespace Lavos
 {
 	public class Pickup : Deployable
 	{
-		public Pickup(string fileName, int laneNumber, float speed) : base(fileName, laneNumber, speed) { }
-
-		protected override void OnPlayerCollision()
+		public Pickup(int laneNumber, float speed) : base(laneNumber, speed)
 		{
-			Debug.LogError("NOT IMPLEMENTED");
+			string fileName = "pickup-" + DeployableColor.ToString().ToLower() + ".png";
+			SetupSprite(fileName);
+		}
+
+		protected override void OnPlayerCollision(Player player)
+		{
+			player.CurrentItemColor = DeployableColor;
+			Destroy();
 		}
 
 		protected override void Update()
 		{
-			if (x <= -width)
+			if (x <= -sprite.width)
 			{
 				LateDestroy();
 				return;

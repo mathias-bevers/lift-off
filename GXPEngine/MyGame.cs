@@ -10,7 +10,6 @@ namespace Lavos
 		public readonly string scoreFilePath;
 
 		public static MyGame Instance => main as MyGame;
-		public Player Player { get; set; }
 
 		public MyGame() : base(1366, 800, false) //TODO: Check if the resolution is correct.
 		{
