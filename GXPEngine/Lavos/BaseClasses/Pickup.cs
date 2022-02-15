@@ -13,7 +13,7 @@ namespace Lavos
 
 		protected override void OnPlayerCollision(Player player)
 		{
-			player.CurrentItemColor = DeployableColor;
+			player.PickedUpPickup(this);
 			Destroy();
 		}
 

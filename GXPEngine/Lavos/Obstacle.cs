@@ -10,7 +10,8 @@
 
 		protected override void OnPlayerCollision(Player player)
 		{
-			MyGame.Instance.PlayerDied();
+			if (!player.isUsingAbility || player.CurrentDeployableColor != DeployableColor) { MyGame.Instance.PlayerDied(); }
+
 			Destroy();
 		}
 

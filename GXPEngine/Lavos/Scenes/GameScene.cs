@@ -50,7 +50,7 @@ namespace Lavos
 			TimeSurvived = Time.time - startTime;
 
 			scoreText.Text($"Score: {Score:n2}", true);
-			abilityText.Text($"Ability: {Player.CurrentItemColor}", true);
+			abilityText.Text($"Ability: {Player.CurrentDeployableColor}", true);
 		}
 	}
 }
