@@ -13,10 +13,10 @@ namespace Lavos
 		public bool isUsingAbility { get; private set; }
 		public Deployable.Color? CurrentDeployableColor { get; private set; }
 
-		public int LaneNumber { get; private set; } = 1;
+		public int LaneNumber { get; private set; } = 0;
 
 		private bool isGrounded;
-		private float currentLanePosition;
+		private float currentLaneBottom;
 		private float velocity;
 		private int abilityUsageStartTime;
 		private int abilityUsageTimeLeft;
@@ -24,9 +24,12 @@ namespace Lavos
 		public Player(string fileName, int columns, int rows) : base(fileName, columns, rows)
 		{
 			SetCollider();
-			x = game.width * 0.1f;
-			currentLanePosition = MyGame.Instance.GetLaneCenter(LaneNumber) - height;
-			y = currentLanePosition;
+
+			float allLanes = game.height * 0.27375f;
+			float laneSize = allLanes / 3.0f;
+			currentLaneBottom = game.height - laneSize;
+
+			SetXY(game.width * 0.1f, currentLaneBottom);
 		}
 
 		private void Update()
@@ -43,12 +46,11 @@ namespace Lavos
 
 			y += velocity;
 
-			if (y >= currentLanePosition)
-			{
-				y = currentLanePosition;
-				velocity = 0;
-				isGrounded = true;
-			}
+			if (y < currentLaneBottom) { return; }
+
+			y = currentLaneBottom;
+			velocity = 0;
+			isGrounded = true;
 		}
 
 		private void ProcessVerticalInput()
@@ -58,8 +60,8 @@ namespace Lavos
 				if (LaneNumber == 2) { return; }
 
 				++LaneNumber;
-				currentLanePosition = MyGame.Instance.GetLaneCenter(LaneNumber) - height;
-				y = currentLanePosition;
+				currentLaneBottom = SceneManager.Instance.GetCurrentScene<GameScene>().GetLaneBottom(LaneNumber) - height;
+				y = currentLaneBottom;
 			}
 
 			if (!Input.GetKeyDown(Key.S)) { return; }
@@ -67,8 +69,8 @@ namespace Lavos
 			if (LaneNumber == 0) { return; }
 
 			--LaneNumber;
-			currentLanePosition = MyGame.Instance.GetLaneCenter(LaneNumber) - height;
-			y = currentLanePosition;
+			currentLaneBottom = SceneManager.Instance.GetCurrentScene<GameScene>().GetLaneBottom(LaneNumber) - height;
+			y = currentLaneBottom;
 		}
 
 		private void ProcessHorizontalInput()

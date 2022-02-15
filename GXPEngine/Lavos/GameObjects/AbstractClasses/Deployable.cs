@@ -29,7 +29,7 @@ namespace Lavos
 		{
 			sprite = new Sprite(fileName);
 
-			SetXY(game.width, MyGame.Instance.GetLaneCenter(LaneNumber) - sprite.height);
+			SetXY(game.width, SceneManager.Instance.GetCurrentScene<GameScene>().GetLaneBottom(LaneNumber) - sprite.height);
 
 			sprite.SetCollider();
 			sprite.collider.isTrigger = true;

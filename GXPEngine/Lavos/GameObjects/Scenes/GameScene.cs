@@ -1,6 +1,4 @@
-﻿using System.Drawing.Text;
-using GXPEngine;
-using Mathias.Utilities;
+﻿using GXPEngine;
 
 namespace Lavos
 {
@@ -19,10 +17,12 @@ namespace Lavos
 
 		public override void Start()
 		{
-			var ground = new Sprite("ground-temp.png");
-			ground.SetXY(0, game.height - ground.height);
-			ground.SetCollider();
-			AddChild(ground);
+			AddChild(new Sprite("background.png"));
+
+			var foreground = new Sprite("foreground.png");
+			foreground.SetXY(0, game.height - foreground.height);
+			foreground.SetCollider();
+			AddChild(foreground);
 
 			Player = new Player("triangle.png", 1, 1);
 			AddChild(Player);
@@ -38,6 +38,14 @@ namespace Lavos
 		private void Update()
 		{
 			TimeSurvived = Time.time - startTime;
+		}
+
+		public float GetLaneBottom(int laneNumber)
+		{
+			float allLanes = game.height * 0.27375f;
+			float laneSize = allLanes / 3.0f;
+
+			return game.height - (laneSize * laneNumber);
 		}
 	}
 }

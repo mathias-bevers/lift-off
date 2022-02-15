@@ -64,5 +64,7 @@ namespace Lavos
 					break;
 			}
 		}
+
+		public T GetCurrentScene<T>() where T : Scene => CurrentScene as T;
 	}
 }

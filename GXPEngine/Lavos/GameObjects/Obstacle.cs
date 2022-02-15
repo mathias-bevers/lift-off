@@ -1,10 +1,22 @@
-﻿namespace Lavos
+﻿using System;
+using System.IO;
+using System.Linq;
+using GXPEngine;
+using Mathias.Utilities;
+
+namespace Lavos
 {
 	public class Obstacle : Deployable
 	{
+		private static string _folderPath;
+		private static string[] _imagePaths;
+
 		public Obstacle(int laneNumber, float speed) : base(laneNumber, speed)
 		{
-			string fileName = "obstacle-" + DeployableColor.ToString().ToLower() + ".png";
+			_folderPath ??= Directory.GetCurrentDirectory() + @"\obstacles";
+			_imagePaths ??= Directory.GetFiles(_folderPath, "*.png");
+
+			string fileName = @"obstacles\" + _imagePaths[new Random(Time.deltaTimeMiliseconds).Next(0, _imagePaths.Length)].Split('\\').Last();
 			SetupSprite(fileName);
 		}
 

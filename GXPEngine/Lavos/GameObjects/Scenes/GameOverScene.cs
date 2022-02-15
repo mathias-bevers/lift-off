@@ -38,7 +38,7 @@ namespace Lavos
 			AddChild(playerScore);
 
 			Array.Sort(scores);
-			Array.Reverse(scores); 
+			Array.Reverse(scores);
 
 			var scoreTextSize = new Vector2(200, 40);
 			float startY = (game.height * 0.5f) - (scoreTextSize.y * 0.5f); // Placed in the middle of the screen.
@@ -46,10 +46,10 @@ namespace Lavos
 
 			for (var i = 0; i < (scores.Length < 3 ? scores.Length : 3); i++)
 			{
-				var highScore = new EasyDraw((int)scoreTextSize.x, (int)scoreTextSize.y);
+				var highScore = new EasyDraw((int) scoreTextSize.x, (int) scoreTextSize.y);
 				highScore.SetXY(game.width * 0.5f, startY + (highScore.height * 1.1f * i));
 				highScore.TextAlign(CenterMode.Min, CenterMode.Center);
-				highScore.Text($"{i+1}: {scores[i]:n2}");
+				highScore.Text($"{i + 1}: {scores[i]:n2}");
 				AddChild(highScore);
 			}
 		}

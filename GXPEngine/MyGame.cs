@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using GXPEngine;
-using Mathias.Utilities;
 
 namespace Lavos
 {
@@ -36,20 +35,10 @@ namespace Lavos
 			Console.ReadLine();
 		}
 
-		public float GetLaneCenter(int laneNumber)
-		{
-			float halfScreen = height * 0.5f;
-			float laneSize = halfScreen / 3.0f;
-			float laneCenter = laneSize * 0.5f;
-
-			return game.height - laneCenter - (laneSize * laneNumber);
-		}
-
 		public void PlayerDied()
 		{
 			var gameScene = (GameScene)SceneManager.Instance.CurrentScene;
 			
-
 			if (!File.Exists(scoreFilePath))
 			{
 				using StreamWriter writer = File.CreateText(scoreFilePath);
