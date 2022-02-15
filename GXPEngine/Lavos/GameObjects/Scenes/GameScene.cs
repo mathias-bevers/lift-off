@@ -14,8 +14,6 @@ namespace Lavos
 
 		private int startTime;
 		private DeploymentManager deploymentManager;
-		private EasyDraw scoreText;
-		private EasyDraw abilityText;
 
 		public GameScene() { Start(); }
 
@@ -32,15 +30,7 @@ namespace Lavos
 			deploymentManager = new DeploymentManager();
 			AddChild(deploymentManager);
 
-			scoreText = new EasyDraw(200, 50);
-			scoreText.TextAlign(CenterMode.Min, CenterMode.Min);
-			scoreText.SetXY(10, 10);
-			AddChild(scoreText);
-
-			abilityText = new EasyDraw(200, 50);
-			abilityText.TextAlign(CenterMode.Max, CenterMode.Min);
-			abilityText.SetXY(game.width - abilityText.width, 10);
-			AddChild(abilityText);
+			AddChild(new GameHUD(this));
 
 			startTime = Time.time;
 		}
@@ -48,9 +38,6 @@ namespace Lavos
 		private void Update()
 		{
 			TimeSurvived = Time.time - startTime;
-
-			scoreText.Text($"Score: {Score:n2}", true);
-			abilityText.Text($"Ability: {Player.CurrentDeployableColor}", true);
 		}
 	}
 }
