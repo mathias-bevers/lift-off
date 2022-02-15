@@ -9,7 +9,8 @@ namespace MBevers
 	public static class EnumExtensions
 	{
 		/// <summary>
-		///     Get a random element of the passed in <see cref="Enum"/>.
+		///     Get a random element of the passed in <see cref="Enum" />. This is based on the <see cref="System.Random" />
+		///     algorithm, this returns a pseudo random number. Based on a seed, by default this is time based.
 		/// </summary>
 		/// <param name="enum">The <see cref="Enum" /> of which a random element is picked.</param>
 		/// <exception cref="ArgumentException">Thrown when the passed in type is not of type <see cref="Enum" />.</exception>
@@ -17,6 +18,22 @@ namespace MBevers
 		{
 			int count = Count(@enum);
 			int randomNumber = new Random().Next(0, count);
+			var randomizedEnum = (T)Enum.ToObject(typeof(T), randomNumber);
+
+			return randomizedEnum;
+		}
+
+		/// <summary>
+		///     Get a random element of the passed in <see cref="Enum" />. This is based on the <see cref="System.Random" />
+		///     algorithm, this returns a pseudo random number. Based on a seed, by default this is time based.
+		/// </summary>
+		/// <param name="enum">The <see cref="Enum" /> of which a random element is picked.</param>
+		/// <param name="seed">The seed the random number is picked from.</param>
+		/// <exception cref="ArgumentException">Thrown when the passed in type is not of type <see cref="Enum" />.</exception>
+		public static T Random<T>(this T @enum, int seed) where T : Enum
+		{
+			int count = Count(@enum);
+			int randomNumber = new Random(seed).Next(0, count);
 			var randomizedEnum = (T)Enum.ToObject(typeof(T), randomNumber);
 
 			return randomizedEnum;

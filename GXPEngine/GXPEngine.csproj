@@ -47,9 +47,11 @@
     <Compile Include="GXPEngine\AddOns\SpriteBatch.cs" />
     <Compile Include="GXPEngine\AddOns\TiledLoader.cs" />
     <Compile Include="GXPEngine\Utils\Debug.cs" />
+    <Compile Include="Lavos\BaseClasses\Deployable.cs" />
+    <Compile Include="Lavos\BaseClasses\Pickup.cs" />
     <Compile Include="Lavos\BaseClasses\Scene.cs" />
     <Compile Include="Lavos\Obstacle.cs" />
-    <Compile Include="Lavos\ObstacleManager.cs" />
+    <Compile Include="Lavos\DeploymentManager.cs" />
     <Compile Include="Lavos\SceneManager.cs" />
     <Compile Include="Lavos\Button.cs" />
     <Compile Include="Lavos\Scenes\GameOverScene.cs" />

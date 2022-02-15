@@ -1,43 +1,29 @@
-﻿using GXPEngine;
-using MBevers;
-
-namespace Lavos
+﻿namespace Lavos
 {
-	public class Obstacle : Sprite
+	public class Obstacle : Deployable
 	{
-		public enum Color { Red, Blue, Purple }
-
-		public Color ObstacleColor { get; }
-
-		private readonly int laneNumber;
-
-		public Obstacle(string fileName, int laneNumber) : base(fileName)
+		public Obstacle(int laneNumber, float speed) : base(laneNumber, speed)
 		{
-			this.laneNumber = laneNumber;
-
-			SetXY(game.width, MyGame.Instance.GetLaneCenter(laneNumber) - height);
-
-			SetCollider();
-			collider.isTrigger = true;
-
-			ObstacleColor = ObstacleColor.Random();
+			string fileName = "obstacle-" + DeployableColor.ToString().ToLower() + ".png";
+			SetupSprite(fileName);
 		}
 
-		private void Update()
+		protected override void OnPlayerCollision(Player player)
 		{
-			GameObject[] collisions = GetCollisions();
+			if (!player.isUsingAbility || player.CurrentDeployableColor != DeployableColor) { MyGame.Instance.PlayerDied(); }
 
-			if (collisions.Length == 0) { return; }
+			Destroy();
+		}
 
-			foreach (GameObject collision in collisions)
+		protected override void Update()
+		{
+			if (x <= -sprite.width)
 			{
-				if (collision is not Player player) { continue; }
-
-				if (player.LaneNumber != laneNumber) { continue; }
-
-				MyGame.Instance.PlayerDied();
+				LateDestroy();
 				return;
 			}
+
+			base.Update();
 		}
 	}
 }

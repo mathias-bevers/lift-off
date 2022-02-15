@@ -6,14 +6,16 @@ namespace Lavos
 {
 	public class GameScene : Scene
 	{
+		public Player Player { get; private set; }
 		public int TimeSurvived { get; private set; }
-		public float Score => TimeSurvived / 1000.0f * (obstacleManager.ObstacleSpeed - (obstacleManager.ObstacleSpeed - 1.0f));
+		public float Score => TimeSurvived / 1000.0f * (deploymentManager.DeployableSpeed - (deploymentManager.DeployableSpeed - 1.0f));
 
 		public override string Name { get; protected set; } = "game";
 
 		private int startTime;
-		private ObstacleManager obstacleManager;
+		private DeploymentManager deploymentManager;
 		private EasyDraw scoreText;
+		private EasyDraw abilityText;
 
 		public GameScene() { Start(); }
 
@@ -24,16 +26,21 @@ namespace Lavos
 			ground.SetCollider();
 			AddChild(ground);
 
-			MyGame.Instance.Player = new Player("triangle.png", 1, 1);
-			AddChild(MyGame.Instance.Player);
+			Player = new Player("triangle.png", 1, 1);
+			AddChild(Player);
 
-			obstacleManager = new ObstacleManager();
-			AddChild(obstacleManager);
+			deploymentManager = new DeploymentManager();
+			AddChild(deploymentManager);
 
 			scoreText = new EasyDraw(200, 50);
 			scoreText.TextAlign(CenterMode.Min, CenterMode.Min);
 			scoreText.SetXY(10, 10);
 			AddChild(scoreText);
+
+			abilityText = new EasyDraw(200, 50);
+			abilityText.TextAlign(CenterMode.Max, CenterMode.Min);
+			abilityText.SetXY(game.width - abilityText.width, 10);
+			AddChild(abilityText);
 
 			startTime = Time.time;
 		}
@@ -41,7 +48,9 @@ namespace Lavos
 		private void Update()
 		{
 			TimeSurvived = Time.time - startTime;
+
 			scoreText.Text($"Score: {Score:n2}", true);
+			abilityText.Text($"Ability: {Player.CurrentDeployableColor}", true);
 		}
 	}
 }
