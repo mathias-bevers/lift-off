@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using GXPEngine;
-using Mathias.Utilities;
 
 namespace Lavos
 {
@@ -16,13 +15,14 @@ namespace Lavos
 			_folderPath ??= Directory.GetCurrentDirectory() + @"\obstacles";
 			_imagePaths ??= Directory.GetFiles(_folderPath, "*.png");
 
-			string fileName = @"obstacles\" + _imagePaths[new Random(Time.deltaTimeMiliseconds).Next(0, _imagePaths.Length)].Split('\\').Last();
+			string fileName = @"obstacles\" +
+			                  _imagePaths[new Random(Time.deltaTimeMiliseconds).Next(0, _imagePaths.Length)].Split('\\').Last();
 			SetupSprite(fileName);
 		}
 
-		protected override void OnPlayerCollision(Player player)
+		protected override void OnPlayerCollision()
 		{
-			if (!player.isUsingAbility || player.CurrentDeployableColor != DeployableColor) { MyGame.Instance.PlayerDied(); }
+			if (!player.IsUsingAbility || player.AbilityType != AbilityType.Strength) { MyGame.Instance.PlayerDied(); }
 
 			Destroy();
 		}

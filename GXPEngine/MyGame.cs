@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using GXPEngine;
+using GXPEngine.Core;
 
 namespace Lavos
 {
@@ -25,6 +26,11 @@ namespace Lavos
 		private void Update()
 		{
 			if (Input.GetKey(Key.ESCAPE)) { Destroy(); }
+
+			if (Input.GetKeyDown(Key.C))
+			{
+				Collision.drawCollision = !Collision.drawCollision;
+			}
 		}
 
 		private static void Main()

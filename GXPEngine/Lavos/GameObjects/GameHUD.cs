@@ -1,13 +1,14 @@
 ﻿using GXPEngine;
+using Mathias.Utilities;
 
 namespace Lavos
 {
 	public class GameHUD : GameObject
 	{
-
-		private EasyDraw scoreText;
-		private EasyDraw abilityText;
-		private GameScene gameScene;
+		private readonly EasyDraw abilityText;
+		private readonly EasyDraw scoreText;
+		private readonly GameScene gameScene;
+		private readonly Sprite abilityBar;
 
 		public GameHUD(GameScene gameScene)
 		{
@@ -22,12 +23,17 @@ namespace Lavos
 			abilityText.TextAlign(CenterMode.Max, CenterMode.Min);
 			abilityText.SetXY(game.width - abilityText.width, 10);
 			AddChild(abilityText);
+
+			abilityBar = new Sprite("White1x1.png") {width = 200, height = 10};
+			abilityBar.SetXY((game.width * 0.5f) - (abilityBar.width * 0.5f), 10);
+			AddChild(abilityBar);
 		}
 
 		private void Update()
 		{
 			scoreText.Text($"Score: {gameScene.Score:n2}", true);
-			abilityText.Text($"Ability: {gameScene.Player.CurrentDeployableColor}", true);
+			abilityText.Text($"Ability: {gameScene.Player.AbilityType}", true);
+			abilityBar.SetScaleXY(gameScene.Player.AbilityTimeLeft01 * 200.0f, 10);
 		}
 	}
 }

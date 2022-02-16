@@ -1,6 +1,5 @@
 ﻿using System;
 using GXPEngine;
-using MBevers;
 
 namespace Lavos
 {
@@ -8,28 +7,26 @@ namespace Lavos
 	{
 		public event Action<Deployable> OnDestroyed;
 
-		public enum Color { Red, Blue, Purple }
-
-		public Color DeployableColor { get; }
-		public int LaneNumber { get; }
-
 		private readonly float speed;
 
+		public int LaneNumber { get; }
+
+		protected Player player;
 		protected Sprite sprite;
 
-		protected Deployable(int laneNumber, float speed) : base()
+		protected Deployable(int laneNumber, float speed)
 		{
 			LaneNumber = laneNumber;
 			this.speed = speed;
-			
-			DeployableColor = DeployableColor.Random(Time.time);
 		}
 
 		protected void SetupSprite(string fileName)
 		{
 			sprite = new Sprite(fileName);
 
-			SetXY(game.width, SceneManager.Instance.GetCurrentScene<GameScene>().GetLaneBottom(LaneNumber) - sprite.height);
+			var gameScene = SceneManager.Instance.GetActiveScene<GameScene>();
+			SetXY(game.width, gameScene.GetLaneBottom(LaneNumber) - sprite.height);
+			player = gameScene.Player;
 
 			sprite.SetCollider();
 			sprite.collider.isTrigger = true;
@@ -38,7 +35,9 @@ namespace Lavos
 
 		protected virtual void Update()
 		{
-			x -= speed;
+			if (!player.IsUsingAbility || player.AbilityType != AbilityType.SlowTime) { x -= speed; }
+			else { x -= speed * 0.25f; }
+
 
 			CheckCollisions();
 		}
@@ -51,16 +50,16 @@ namespace Lavos
 
 			foreach (GameObject collision in collisions)
 			{
-				if (collision is not Player player) { continue; }
+				if (collision is not Player) { continue; }
 
 				if (player.LaneNumber != LaneNumber) { continue; }
 
-				OnPlayerCollision(player);
+				OnPlayerCollision();
 				return;
 			}
 		}
 
-		protected abstract void OnPlayerCollision(Player player);
+		protected abstract void OnPlayerCollision();
 
 		protected override void OnDestroy()
 		{

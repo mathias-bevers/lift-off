@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Management.Instrumentation;
 using GXPEngine;
 using Mathias.Utilities;
 
@@ -36,26 +37,26 @@ namespace Lavos
 		{
 			CurrentScene?.OnOffload();
 
-			foreach (GameObject child in MyGame.Instance.GetChildren().Where(child => child != this)) { child.Destroy(); }
+			foreach (GameObject child in GetChildren()) { child.Destroy(); }
 
 			switch (sceneName)
 			{
 				case "game":
 					var gameScene = new GameScene();
 					CurrentScene = gameScene;
-					game.AddChild(gameScene);
+					AddChild(gameScene);
 					break;
 
 				case "main-menu":
 					var menuScene = new MainMenuScene();
 					CurrentScene = menuScene;
-					game.AddChild(menuScene);
+					AddChild(menuScene);
 					break;
 
 				case "game-over":
 					var gameOverScene = new GameOverScene();
 					CurrentScene = gameOverScene;
-					game.AddChild(gameOverScene);
+					AddChild(gameOverScene);
 					break;
 
 				default:
@@ -65,6 +66,19 @@ namespace Lavos
 			}
 		}
 
-		public T GetCurrentScene<T>() where T : Scene => CurrentScene as T;
+		public T GetActiveScene<T>() where T : Scene
+		{
+			T[] scenesOfT = FindObjectsOfType<T>();
+
+			switch (scenesOfT.Length)
+			{
+				case 0: throw new InstanceNotFoundException($"No instances of {typeof(T).Name} found.");
+				case > 1:
+					Debug.LogWaring($"There are {scenesOfT.Length} instances of {typeof(T).Name}");
+					break;
+			}
+
+			return scenesOfT.First();
+		}
 	}
 }
