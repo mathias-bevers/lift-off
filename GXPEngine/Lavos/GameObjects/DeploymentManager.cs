@@ -6,8 +6,8 @@ namespace Lavos
 {
 	public class DeploymentManager : GameObject
 	{
+		public const int LANES_COUNT = 3;
 		private const float SPEED_UP_INCREMENT = 0.25f;
-		private const int LANES_COUNT = 3;
 		private readonly Dictionary<int, int> lanes = new();
 
 		public float DeployableSpeed { get; private set; } = 6.25f;

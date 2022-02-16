@@ -1,18 +1,21 @@
-﻿using GXPEngine;
-using Mathias.Utilities;
+﻿using System;
+using GXPEngine;
 
 namespace Lavos
 {
 	public class GameScene : Scene
 	{
-		public Player Player { get; private set; }
+		public float Score => (TimeSurvived / 1000.0f) *
+		                      (deploymentManager.DeployableSpeed - (deploymentManager.DeployableSpeed - 1.0f));
+
 		public int TimeSurvived { get; private set; }
-		public float Score => TimeSurvived / 1000.0f * (deploymentManager.DeployableSpeed - (deploymentManager.DeployableSpeed - 1.0f));
+		public Player Player { get; private set; }
 
 		public override string Name { get; protected set; } = "game";
+		private DeploymentManager deploymentManager;
 
 		private int startTime;
-		private DeploymentManager deploymentManager;
+		private int lastLaserSpawnTime;
 
 		public GameScene() { Start(); }
 
@@ -39,6 +42,18 @@ namespace Lavos
 		private void Update()
 		{
 			TimeSurvived = Time.time - startTime;
+
+			if (new Random(TimeSurvived).Next(0, game.currentFps * 15) > 10) { return; }
+
+			int spawnInterval = TimeSurvived - lastLaserSpawnTime;
+			if (spawnInterval < 3000) { return; }
+
+			int nextLane = new Random(spawnInterval).Next(0, DeploymentManager.LANES_COUNT);
+			var laser = new LaserBeam("laser-beam.png", 1, 5, nextLane);
+			laser.SetXY(0, GetLaneBottom(nextLane) - laser.height);
+			AddChild(laser);
+
+			lastLaserSpawnTime = TimeSurvived;
 		}
 
 		public float GetLaneBottom(int laneNumber)

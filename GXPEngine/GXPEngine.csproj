@@ -49,6 +49,7 @@
     <Compile Include="GXPEngine\Utils\Debug.cs" />
     <Compile Include="Lavos\GameObjects\AbilityType.cs" />
     <Compile Include="Lavos\GameObjects\AbstractClasses\Deployable.cs" />
+    <Compile Include="Lavos\GameObjects\LaserBeam.cs" />
     <Compile Include="Lavos\GameObjects\Pickup.cs" />
     <Compile Include="Lavos\GameObjects\AbstractClasses\Scene.cs" />
     <Compile Include="Lavos\GameObjects\Obstacle.cs" />
