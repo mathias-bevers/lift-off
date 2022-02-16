@@ -17,7 +17,7 @@ namespace Lavos
 			SetupSprite(fileName);
 		}
 
-		protected override void OnPlayerCollision(Player player)
+		protected override void OnPlayerCollision()
 		{
 			player.PickedUpPickup(this);
 			Destroy();

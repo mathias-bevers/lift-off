@@ -32,9 +32,8 @@ namespace Lavos
 		private void Update()
 		{
 			scoreText.Text($"Score: {gameScene.Score:n2}", true);
-			abilityText.Text($"Ability: {gameScene.Player.AbilityColor}", true);
+			abilityText.Text($"Ability: {gameScene.Player.AbilityType}", true);
 			abilityBar.SetScaleXY(gameScene.Player.AbilityTimeLeft01 * 200.0f, 10);
-			Debug.Log(gameScene.Player.AbilityTimeLeft01.ToString());
 		}
 	}
 }

@@ -11,9 +11,9 @@ namespace Lavos
 		//TODO: Test movement variables.
 		private const float JUMP_FORCE = 14.0f;
 		private const float MOVEMENT_SPEED = 3.0f;
-		private const int MAX_ABILITY_USE_TIME = 3000;
+		private const int MAX_ABILITY_USE_TIME = 5000;
 
-		public AbilityType? AbilityColor { get; private set; }
+		public AbilityType? AbilityType { get; private set; }
 		public bool IsUsingAbility { get; private set; }
 
 		public float AbilityTimeLeft01
@@ -76,7 +76,7 @@ namespace Lavos
 				if (LaneNumber == 2) { return; }
 
 				++LaneNumber;
-				currentLaneBottom = SceneManager.Instance.GetCurrentScene<GameScene>().GetLaneBottom(LaneNumber) - height;
+				currentLaneBottom = SceneManager.Instance.GetActiveScene<GameScene>().GetLaneBottom(LaneNumber) - height;
 				y = currentLaneBottom;
 			}
 
@@ -85,7 +85,7 @@ namespace Lavos
 			if (LaneNumber == 0) { return; }
 
 			--LaneNumber;
-			currentLaneBottom = SceneManager.Instance.GetCurrentScene<GameScene>().GetLaneBottom(LaneNumber) - height;
+			currentLaneBottom = SceneManager.Instance.GetActiveScene<GameScene>().GetLaneBottom(LaneNumber) - height;
 			y = currentLaneBottom;
 		}
 
@@ -108,24 +108,26 @@ namespace Lavos
 				{
 					abilityUsageTimeLeft = 0;
 					IsUsingAbility = false;
-					AbilityColor = null;
+					AbilityType = null;
 				}
 			}
 
 			if (Input.GetKeyDown(Key.LEFT_SHIFT))
 			{
-				if (AbilityColor == null) { return; }
+				if (AbilityType == null) { return; }
 
 				abilityUsageStartTime = Time.time;
 				IsUsingAbility = true;
 			}
 
-			if (Input.GetKeyUp(Key.LEFT_SHIFT)) { IsUsingAbility = false; }
+			if (!Input.GetKeyUp(Key.LEFT_SHIFT)) { return; }
+
+			IsUsingAbility = false;
 		}
 
 		public void PickedUpPickup(Pickup pickup)
 		{
-			AbilityColor = pickup.AbilityType;
+			AbilityType = pickup.AbilityType;
 			abilityUsageTimeLeft = MAX_ABILITY_USE_TIME;
 		}
 	}
