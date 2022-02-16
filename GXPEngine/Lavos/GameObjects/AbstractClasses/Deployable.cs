@@ -1,28 +1,22 @@
 ﻿using System;
 using GXPEngine;
-using MBevers;
 
 namespace Lavos
 {
 	public abstract class Deployable : GameObject
 	{
 		public event Action<Deployable> OnDestroyed;
-
-		public enum Color { Red, Blue, Purple }
-
-		public Color DeployableColor { get; }
+		
 		public int LaneNumber { get; }
 
 		private readonly float speed;
 
 		protected Sprite sprite;
 
-		protected Deployable(int laneNumber, float speed) : base()
+		protected Deployable(int laneNumber, float speed)
 		{
 			LaneNumber = laneNumber;
 			this.speed = speed;
-			
-			DeployableColor = DeployableColor.Random(Time.time);
 		}
 
 		protected void SetupSprite(string fileName)

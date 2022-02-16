@@ -22,7 +22,7 @@ namespace Lavos
 
 		protected override void OnPlayerCollision(Player player)
 		{
-			if (!player.isUsingAbility || player.CurrentDeployableColor != DeployableColor) { MyGame.Instance.PlayerDied(); }
+			if (!player.IsUsingAbility || player.AbilityColor != AbilityType.Strength) { MyGame.Instance.PlayerDied(); }
 
 			Destroy();
 		}

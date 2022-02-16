@@ -47,6 +47,7 @@
     <Compile Include="GXPEngine\AddOns\SpriteBatch.cs" />
     <Compile Include="GXPEngine\AddOns\TiledLoader.cs" />
     <Compile Include="GXPEngine\Utils\Debug.cs" />
+    <Compile Include="Lavos\GameObjects\AbilityType.cs" />
     <Compile Include="Lavos\GameObjects\AbstractClasses\Deployable.cs" />
     <Compile Include="Lavos\GameObjects\Pickup.cs" />
     <Compile Include="Lavos\GameObjects\AbstractClasses\Scene.cs" />

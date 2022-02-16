@@ -1,4 +1,6 @@
-﻿using GXPEngine;
+﻿using System;
+using GXPEngine;
+using Mathias.Utilities;
 
 namespace Lavos
 {
@@ -10,10 +12,24 @@ namespace Lavos
 		private const float JUMP_FORCE = 14.0f;
 		private const float MOVEMENT_SPEED = 3.0f;
 		private const int MAX_ABILITY_USE_TIME = 3000;
-		public bool isUsingAbility { get; private set; }
-		public Deployable.Color? CurrentDeployableColor { get; private set; }
 
-		public int LaneNumber { get; private set; } = 0;
+		public AbilityType? AbilityColor { get; private set; }
+		public bool IsUsingAbility { get; private set; }
+
+		public float AbilityTimeLeft01
+		{
+			get
+			{
+				try { return (float)abilityUsageTimeLeft / MAX_ABILITY_USE_TIME; }
+				catch (DivideByZeroException exception)
+				{
+					Debug.LogWaring(exception.Message);
+					return 0;
+				}
+			}
+		}
+
+		public int LaneNumber { get; private set; }
 
 		private bool isGrounded;
 		private float currentLaneBottom;
@@ -84,31 +100,32 @@ namespace Lavos
 
 		private void ProcessAbilityUsage()
 		{
-			if (isUsingAbility)
+			if (IsUsingAbility)
 			{
 				abilityUsageTimeLeft -= Time.time - abilityUsageStartTime;
 
 				if (abilityUsageTimeLeft <= 0)
 				{
-					isUsingAbility = false;
-					CurrentDeployableColor = null;
+					abilityUsageTimeLeft = 0;
+					IsUsingAbility = false;
+					AbilityColor = null;
 				}
 			}
 
 			if (Input.GetKeyDown(Key.LEFT_SHIFT))
 			{
-				if (CurrentDeployableColor == null) { return; }
+				if (AbilityColor == null) { return; }
 
 				abilityUsageStartTime = Time.time;
-				isUsingAbility = true;
+				IsUsingAbility = true;
 			}
 
-			if (Input.GetKeyUp(Key.LEFT_SHIFT)) { isUsingAbility = false; }
+			if (Input.GetKeyUp(Key.LEFT_SHIFT)) { IsUsingAbility = false; }
 		}
 
 		public void PickedUpPickup(Pickup pickup)
 		{
-			CurrentDeployableColor = pickup.DeployableColor;
+			AbilityColor = pickup.AbilityType;
 			abilityUsageTimeLeft = MAX_ABILITY_USE_TIME;
 		}
 	}

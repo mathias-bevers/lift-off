@@ -1,13 +1,19 @@
-﻿using System;
-using Mathias.Utilities;
+﻿using GXPEngine;
+using MBevers;
 
 namespace Lavos
 {
 	public class Pickup : Deployable
 	{
+		public const int LANE_SIZE = 73;
+
+		public AbilityType AbilityType { get; }
+
 		public Pickup(int laneNumber, float speed) : base(laneNumber, speed)
 		{
-			string fileName = "pickup-" + DeployableColor.ToString().ToLower() + ".png";
+			AbilityType = AbilityType.Random(Time.time);
+
+			string fileName = "pickup-" + AbilityType.ToString().ToLower() + ".png";
 			SetupSprite(fileName);
 		}
 
