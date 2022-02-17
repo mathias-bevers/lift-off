@@ -1,17 +1,17 @@
 ﻿using GXPEngine;
-using Mathias.Utilities;
 
 namespace Lavos
 {
 	public class LaserBeam : AnimationSprite
 	{
 		private const int DEADLY_FRAME = 4; //TODO change this value.
-
 		private readonly int laneNumber;
 		private readonly int lastFrame;
 		private readonly Player player;
 
-		private AnimationSprite motor;
+		private readonly SoundChannel soundChannel;
+
+		private readonly AnimationSprite motor;
 
 		public LaserBeam(string filename, int columns, int rows, int laneNumber) : base(filename, columns, rows)
 		{
@@ -20,13 +20,12 @@ namespace Lavos
 
 			lastFrame = (columns * rows) - 1;
 			SetCycle(0, lastFrame + 1);
-		}
 
-		public void AddMotor()
-		{
 			motor = new AnimationSprite("enemyMotorcycleSpritesheet.png", 3, 1);
 			AddChild(motor);
-			motor.SetXY(width - motor.width, -motor.height*0.5f);
+			motor.SetXY(width - motor.width, -motor.height * 0.5f);
+
+			soundChannel = new Sound(@"sounds\laser fire.wav").Play();
 		}
 
 		private void Update()
@@ -36,6 +35,7 @@ namespace Lavos
 
 			if (_currentFrame == lastFrame)
 			{
+				soundChannel.Stop();
 				Destroy();
 				return;
 			}
@@ -44,7 +44,10 @@ namespace Lavos
 
 			if (player.LaneNumber != laneNumber) { return; }
 
-			if (!player.IsUsingAbility || player.AbilityType != AbilityType.Shield) { MyGame.Instance.PlayerDied(); }
+			if (player.IsUsingAbility && player.AbilityType == AbilityType.Shield) { return; }
+
+			soundChannel.Stop();
+			MyGame.Instance.PlayerDied();
 		}
 	}
 }
