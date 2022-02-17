@@ -21,7 +21,7 @@ namespace Lavos
 		{
 			new Sound(@"sounds\pickup powerup.wav").Play();
 
-			if (AbilityType != AbilityType.Chip) { player.PickedUpPickup(this); }
+			player.PickedUpPickup(this);
 
 			Destroy();
 		}

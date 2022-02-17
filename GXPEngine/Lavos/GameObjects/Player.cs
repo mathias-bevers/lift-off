@@ -9,13 +9,16 @@ namespace Lavos
 		private const float GRAVITY = 0.3f;
 
 		private const float JUMP_FORCE = 14.0f;
+
 		//private const float MOVEMENT_SPEED = 4.0f;
 		private const int MAX_ABILITY_USE_TIME = 7500;
+
 		private readonly Sound shieldSound;
 		private readonly Sound slowMotionSound;
 
 		public AbilityType? AbilityType { get; private set; }
 		public bool IsUsingAbility { get; private set; }
+		public bool IsGrounded { get; private set; }
 
 		public float AbilityTimeLeft01
 		{
@@ -31,8 +34,8 @@ namespace Lavos
 		}
 
 		public int LaneNumber { get; private set; }
+		public int CollectedChips { get; private set; }
 
-		private bool isGrounded;
 		private float currentLaneBottom;
 		private float velocity;
 		private int abilityUsageStartTime;
@@ -58,9 +61,9 @@ namespace Lavos
 
 			velocity += GRAVITY;
 
-			if (isGrounded && Input.GetKeyDown(Key.SPACE)) { velocity -= JUMP_FORCE; }
+			if (IsGrounded && Input.GetKeyDown(Key.SPACE)) { velocity -= JUMP_FORCE; }
 
-			isGrounded = false;
+			IsGrounded = false;
 
 			y += velocity;
 
@@ -68,7 +71,7 @@ namespace Lavos
 
 			y = currentLaneBottom;
 			velocity = 0;
-			isGrounded = true;
+			IsGrounded = true;
 
 			Animate(0.1f);
 		}
@@ -131,13 +134,19 @@ namespace Lavos
 
 		public void PickedUpPickup(Pickup pickup)
 		{
+			if (pickup.AbilityType == Lavos.AbilityType.Chip)
+			{
+				++CollectedChips;
+				return;
+			}
+
 			AbilityType = pickup.AbilityType;
 			abilityUsageTimeLeft = MAX_ABILITY_USE_TIME;
 		}
 
 		public override void Animate(float deltaFrameTime = 1)
 		{
-			if (!isGrounded) { SetCycle(0); }
+			if (!IsGrounded) { SetCycle(0); }
 			else { SetCycle(4, 12); }
 
 			base.Animate(deltaFrameTime);
