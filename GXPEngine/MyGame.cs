@@ -21,7 +21,7 @@ namespace Lavos
 			AddChild(sceneManager);
 			sceneManager.LoadScene("main-menu");
 
-			scoreFilePath = Directory.GetCurrentDirectory() + "\\high-scores.txt";
+			scoreFilePath = Directory.GetCurrentDirectory() + @"\high-scores.txt";
 		}
 
 		private void Update()
@@ -44,9 +44,6 @@ namespace Lavos
 
 		public void PlayerDied()
 		{
-			var stackFrame = new StackFrame(1);
-			Mathias.Utilities.Debug.Log($"Killed by {stackFrame.GetMethod().DeclaringType?.Name}");
-
 			var gameScene = SceneManager.Instance.GetActiveScene<GameScene>();
 			
 			if (!File.Exists(scoreFilePath))

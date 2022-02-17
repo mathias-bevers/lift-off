@@ -6,19 +6,23 @@ namespace Lavos
 {
 	public class GameScene : Scene
 	{
+		private readonly SoundChannel themeSC;
+
 		public float Score => (TimeSurvived / 1000.0f) *
 		                      (deploymentManager.DeployableSpeed - (deploymentManager.DeployableSpeed - 1.0f));
-
 		public int TimeSurvived { get; private set; }
 		public Player Player { get; private set; }
-
 		public override string Name { get; protected set; } = "game";
-		private DeploymentManager deploymentManager;
 
+		private DeploymentManager deploymentManager;
 		private int startTime;
 		private int lastLaserSpawnTime;
 
-		public GameScene() { Start(); }
+		public GameScene()
+		{
+			themeSC = new Sound(@"sounds\theme-iteration7.wav", true).Play();
+			Start();
+		}
 
 		public override void Start()
 		{
@@ -38,6 +42,7 @@ namespace Lavos
 			AddChild(new GameHUD(this));
 
 			startTime = Time.time;
+			themeSC.Volume = 0.1f;
 		}
 
 		private void Update()
@@ -74,6 +79,12 @@ namespace Lavos
 			float result = game.height - laneCenter - (laneSize * laneNumber);
 
 			return result;
+		}
+
+		public override void OnOffload()
+		{
+			themeSC.Stop();
+			base.OnOffload();
 		}
 	}
 }

@@ -5,13 +5,13 @@ namespace Lavos
 	public class LaserBeam : AnimationSprite
 	{
 		private const int DEADLY_FRAME = 4; //TODO change this value.
+
+		private readonly AnimationSprite motor;
 		private readonly int laneNumber;
 		private readonly int lastFrame;
 		private readonly Player player;
 
 		private readonly SoundChannel soundChannel;
-
-		private readonly AnimationSprite motor;
 
 		public LaserBeam(string filename, int columns, int rows, int laneNumber) : base(filename, columns, rows)
 		{
@@ -35,7 +35,6 @@ namespace Lavos
 
 			if (_currentFrame == lastFrame)
 			{
-				soundChannel.Stop();
 				Destroy();
 				return;
 			}
@@ -46,8 +45,13 @@ namespace Lavos
 
 			if (player.IsUsingAbility && player.AbilityType == AbilityType.Shield) { return; }
 
-			soundChannel.Stop();
 			MyGame.Instance.PlayerDied();
+		}
+
+		protected override void OnDestroy()
+		{
+			soundChannel.Stop();
+			base.OnDestroy();
 		}
 	}
 }
