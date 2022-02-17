@@ -20,7 +20,9 @@ namespace Lavos
 		protected override void OnPlayerCollision()
 		{
 			new Sound(@"sounds\pickup powerup.wav").Play();
-			player.PickedUpPickup(this);
+
+			if (AbilityType != AbilityType.Chip) { player.PickedUpPickup(this); }
+
 			Destroy();
 		}
 

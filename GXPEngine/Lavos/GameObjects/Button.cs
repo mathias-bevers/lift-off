@@ -14,10 +14,10 @@ namespace Lavos
 
 		public Button(string fileName, string text = null, Vector2 position = default)
 		{
-			SetXY(position);
-
 			sprite = new Sprite(fileName);
 			sprite.SetCollider();
+
+			SetXY(position.x - (sprite.width * 0.5f), position.y - (sprite.height * 0.5f));
 
 			this.text = text;
 

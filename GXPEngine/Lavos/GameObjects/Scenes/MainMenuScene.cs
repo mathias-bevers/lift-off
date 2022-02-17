@@ -10,14 +10,14 @@ namespace Lavos
 
 		public override void Start()
 		{
-			var startButton = new Button("White1x1.png", new Vector2(140, 40), "Start", new Vector2(613, 366));
-			startButton.TextDraw.SetColor(1, 0, 1);
+			AddChild(new Sprite("start-background.png"));
+
+			var startButton = new Button("StartGame.png", position: new Vector2(game.width * 0.5f, game.height * 0.6f));
 			startButton.OnClicked += () => SceneManager.Instance.LoadScene("game");
 			AddChild(startButton);
 
 
-			var quitButton = new Button("White1x1.png", new Vector2(140, 40), "Quit", new Vector2(613, 432));
-			quitButton.TextDraw.SetColor(0, 1, 1);
+			var quitButton = new Button("Quit.png", position: new Vector2(game.width * 0.5f, game.height * 0.75f));
 			quitButton.OnClicked += game.Destroy;
 			AddChild(quitButton);
 		}

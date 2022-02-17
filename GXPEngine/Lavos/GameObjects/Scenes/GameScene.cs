@@ -26,7 +26,7 @@ namespace Lavos
 
 		public override void Start()
 		{
-			AddChild(new Sprite("background.png"));
+			AddChild(new Sprite("game-background.png"));
 
 			var foreground = new Sprite("foreground.png");
 			foreground.SetXY(0, game.height - foreground.height);

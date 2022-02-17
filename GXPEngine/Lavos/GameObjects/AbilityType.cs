@@ -1,4 +1,4 @@
 ﻿namespace Lavos
 {
-	public enum AbilityType { Strength, SlowTime, Shield }
+	public enum AbilityType { Strength, SlowTime, Shield, Chip }
 }
