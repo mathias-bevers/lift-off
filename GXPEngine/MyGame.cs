@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.IO;
 using GXPEngine;
 using GXPEngine.Core;
@@ -28,10 +27,7 @@ namespace Lavos
 		{
 			if (Input.GetKey(Key.ESCAPE)) { Destroy(); }
 
-			if (Input.GetKeyDown(Key.C))
-			{
-				Collision.drawCollision = !Collision.drawCollision;
-			}
+			if (Input.GetKeyDown(Key.C)) { Collision.drawCollision = !Collision.drawCollision; }
 		}
 
 		private static void Main()
@@ -48,7 +44,7 @@ namespace Lavos
 			Mathias.Utilities.Debug.Log($"Killed by {stackFrame.GetMethod().DeclaringType?.Name}");
 
 			var gameScene = SceneManager.Instance.GetActiveScene<GameScene>();
-			
+
 			if (!File.Exists(scoreFilePath))
 			{
 				using StreamWriter writer = File.CreateText(scoreFilePath);

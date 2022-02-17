@@ -11,7 +11,9 @@ namespace Lavos
 		//TODO: Test movement variables.
 		private const float JUMP_FORCE = 14.0f;
 		private const float MOVEMENT_SPEED = 3.0f;
-		private const int MAX_ABILITY_USE_TIME = 5000;
+		private const int MAX_ABILITY_USE_TIME = 7500;
+		private readonly Sound shieldSound;
+		private readonly Sound slowMotionSound;
 
 		public AbilityType? AbilityType { get; private set; }
 		public bool IsUsingAbility { get; private set; }
@@ -36,6 +38,7 @@ namespace Lavos
 		private float velocity;
 		private int abilityUsageStartTime;
 		private int abilityUsageTimeLeft;
+		private SoundChannel abilitySC;
 
 		public Player(string fileName, int columns, int rows) : base(fileName, columns, rows)
 		{
@@ -44,12 +47,14 @@ namespace Lavos
 			currentLaneBottom = 672;
 
 			SetXY(game.width * 0.1f, currentLaneBottom);
+			slowMotionSound = new Sound(@"sounds\enter slowmotion+wobly sound.wav");
+			shieldSound = new Sound(@"sounds\the shield is active.wav");
 		}
 
 		private void Update()
 		{
+			//ProcessHorizontalInput();
 			ProcessVerticalInput();
-			ProcessHorizontalInput();
 			ProcessAbilityUsage();
 
 			velocity += GRAVITY;
@@ -109,20 +114,18 @@ namespace Lavos
 					abilityUsageTimeLeft = 0;
 					IsUsingAbility = false;
 					AbilityType = null;
+					abilitySC?.Stop();
 				}
 			}
 
-			if (Input.GetKeyDown(Key.LEFT_SHIFT))
-			{
-				if (AbilityType == null) { return; }
+			if (!Input.GetKeyDown(Key.LEFT_SHIFT)) { return; }
 
-				abilityUsageStartTime = Time.time;
-				IsUsingAbility = true;
-			}
+			if (AbilityType == null) { return; }
 
-			if (!Input.GetKeyUp(Key.LEFT_SHIFT)) { return; }
+			if (AbilityType == Lavos.AbilityType.SlowTime) { abilitySC = slowMotionSound.Play(); }
 
-			IsUsingAbility = false;
+			abilityUsageStartTime = Time.time;
+			IsUsingAbility = true;
 		}
 
 		public void PickedUpPickup(Pickup pickup)

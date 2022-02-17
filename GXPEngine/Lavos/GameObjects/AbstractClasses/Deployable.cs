@@ -17,7 +17,7 @@ namespace Lavos
 		protected Deployable(int laneNumber, float speed)
 		{
 			LaneNumber = laneNumber;
-			this.speed = speed;
+			this.speed = speed * 100;
 		}
 
 		protected void SetupSprite(string fileName)
@@ -35,8 +35,8 @@ namespace Lavos
 
 		protected virtual void Update()
 		{
-			if (!player.IsUsingAbility || player.AbilityType != AbilityType.SlowTime) { x -= speed; }
-			else { x -= speed * 0.25f; }
+			if (!player.IsUsingAbility || player.AbilityType != AbilityType.SlowTime) { x -= speed * Time.deltaTime; }
+			else { x -= speed * 0.25f * Time.deltaTime; }
 
 
 			CheckCollisions();

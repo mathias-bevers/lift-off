@@ -51,11 +51,11 @@ namespace Lavos
 
 			int nextLane = new Random().Next(0, DeploymentManager.LANES_COUNT);
 			var laser = new LaserBeam("LaserSpritesheet.png", 9, 1, nextLane);
+			laser.SetScaleXY(1.5f, 1);
 			laser.SetXY(game.width - laser.width, GetLaneCenter(nextLane) - (laser.height * 0.5f));
 			laser.AddMotor();
 			AddChild(laser);
 			lastLaserSpawnTime = TimeSurvived;
-			Debug.Log($"Spawned laser beam in lane {nextLane}.");
 		}
 
 		public float GetLaneBottom(int laneNumber)

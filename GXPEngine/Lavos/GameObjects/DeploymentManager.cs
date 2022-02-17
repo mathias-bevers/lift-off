@@ -33,7 +33,7 @@ namespace Lavos
 
 		private void DeployInLane(int laneNumber)
 		{
-			if (new Random().Next(0, 101) < 75)
+			if (new Random().Next(0, 101) < 95)
 			{
 				var obstacle = new Obstacle(laneNumber, DeployableSpeed);
 				obstacle.OnDestroyed += OnDeployableDestroy;
