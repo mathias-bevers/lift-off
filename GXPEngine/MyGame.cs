@@ -11,7 +11,7 @@ namespace Lavos
 		public readonly string scoreFilePath;
 
 		public static MyGame Instance => main as MyGame;
-		private Sound dieSound;
+		private readonly Sound dieSound;
 
 		public MyGame() : base(1366, 800, false) //TODO: Check if the resolution is correct.
 		{
