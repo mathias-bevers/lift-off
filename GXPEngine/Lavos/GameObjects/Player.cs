@@ -36,6 +36,8 @@ namespace Lavos
 		private float velocity;
 		private int abilityUsageStartTime;
 		private int abilityUsageTimeLeft;
+		private readonly Sound slowMotionSound;
+		private SoundChannel slowMotionSC;
 
 		public Player(string fileName, int columns, int rows) : base(fileName, columns, rows)
 		{
@@ -44,6 +46,7 @@ namespace Lavos
 			currentLaneBottom = 672;
 
 			SetXY(game.width * 0.1f, currentLaneBottom);
+			slowMotionSound = new Sound(@"sounds\enter slowmotion+wobly sound.wav");
 		}
 
 		private void Update()
@@ -109,12 +112,15 @@ namespace Lavos
 					abilityUsageTimeLeft = 0;
 					IsUsingAbility = false;
 					AbilityType = null;
+					slowMotionSC?.Stop();
 				}
 			}
 
 			if (Input.GetKeyDown(Key.LEFT_SHIFT))
 			{
 				if (AbilityType == null) { return; }
+
+				if (AbilityType == Lavos.AbilityType.SlowTime) { slowMotionSC = slowMotionSound.Play(); }
 
 				abilityUsageStartTime = Time.time;
 				IsUsingAbility = true;
@@ -123,6 +129,7 @@ namespace Lavos
 			if (!Input.GetKeyUp(Key.LEFT_SHIFT)) { return; }
 
 			IsUsingAbility = false;
+			slowMotionSC?.Stop();
 		}
 
 		public void PickedUpPickup(Pickup pickup)
