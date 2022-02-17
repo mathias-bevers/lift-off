@@ -15,8 +15,7 @@ namespace Lavos
 			_folderPath ??= Directory.GetCurrentDirectory() + @"\obstacles";
 			_imagePaths ??= Directory.GetFiles(_folderPath, "*.png");
 
-			string fileName = @"obstacles\" +
-			                  _imagePaths[new Random(Time.deltaTimeMiliseconds).Next(0, _imagePaths.Length)].Split('\\').Last();
+			string fileName = @"obstacles\" + _imagePaths[new Random(DateTime.Now.Millisecond).Next(0, _imagePaths.Length)].Split('\\').Last();
 			SetupSprite(fileName);
 		}
 

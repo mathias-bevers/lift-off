@@ -17,7 +17,7 @@ namespace Lavos
 		protected Deployable(int laneNumber, float speed)
 		{
 			LaneNumber = laneNumber;
-			this.speed = speed * 100;
+			this.speed = speed * 150;
 		}
 
 		protected void SetupSprite(string fileName)

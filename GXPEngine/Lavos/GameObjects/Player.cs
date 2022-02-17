@@ -8,9 +8,8 @@ namespace Lavos
 	{
 		private const float GRAVITY = 0.3f;
 
-		//TODO: Test movement variables.
 		private const float JUMP_FORCE = 14.0f;
-		private const float MOVEMENT_SPEED = 3.0f;
+		//private const float MOVEMENT_SPEED = 4.0f;
 		private const int MAX_ABILITY_USE_TIME = 7500;
 		private readonly Sound shieldSound;
 		private readonly Sound slowMotionSound;
@@ -94,14 +93,14 @@ namespace Lavos
 			y = currentLaneBottom;
 		}
 
-		private void ProcessHorizontalInput()
+		/*private void ProcessHorizontalInput()
 		{
 			if (Input.GetKey(Key.A)) { x -= MOVEMENT_SPEED; }
 
 			if (Input.GetKey(Key.D)) { x += MOVEMENT_SPEED; }
 
 			x = Mathf.Clamp(x, 0, game.width - width);
-		}
+		}*/
 
 		private void ProcessAbilityUsage()
 		{
@@ -124,6 +123,8 @@ namespace Lavos
 
 			if (AbilityType == Lavos.AbilityType.SlowTime) { abilitySC = slowMotionSound.Play(); }
 
+			if (AbilityType == Lavos.AbilityType.Shield) { abilitySC = shieldSound.Play(); }
+
 			abilityUsageStartTime = Time.time;
 			IsUsingAbility = true;
 		}
@@ -140,6 +141,12 @@ namespace Lavos
 			else { SetCycle(4, 12); }
 
 			base.Animate(deltaFrameTime);
+		}
+
+		protected override void OnDestroy()
+		{
+			abilitySC?.Stop();
+			base.OnDestroy();
 		}
 	}
 }
