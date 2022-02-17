@@ -11,6 +11,7 @@ namespace Lavos
 		public readonly string scoreFilePath;
 
 		public static MyGame Instance => main as MyGame;
+		private Sound dieSound;
 
 		public MyGame() : base(1366, 800, false) //TODO: Check if the resolution is correct.
 		{
@@ -22,6 +23,7 @@ namespace Lavos
 			sceneManager.LoadScene("main-menu");
 
 			scoreFilePath = Directory.GetCurrentDirectory() + @"\high-scores.txt";
+			dieSound = new Sound(@"sounds\die.wav");
 		}
 
 		private void Update()
@@ -44,6 +46,7 @@ namespace Lavos
 
 		public void PlayerDied()
 		{
+			dieSound.Play();
 			var gameScene = SceneManager.Instance.GetActiveScene<GameScene>();
 			
 			if (!File.Exists(scoreFilePath))
