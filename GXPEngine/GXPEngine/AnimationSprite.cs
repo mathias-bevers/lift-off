@@ -252,7 +252,7 @@ namespace GXPEngine
 		/// create a timed sprite animation.
 		/// Smaller values for deltaFrameTime slow down the animation. 
 		/// </summary>
-		public void Animate(float deltaFrameTime=1) {
+		public virtual void Animate(float deltaFrameTime=1) {
 			_animationFrameCounter+=deltaFrameTime;
 			if (_animationFrameCounter>=_animationDelay) {
 				NextFrame();

@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using GXPEngine;
 using GXPEngine.Core;
@@ -43,7 +44,10 @@ namespace Lavos
 
 		public void PlayerDied()
 		{
-			var gameScene = (GameScene)SceneManager.Instance.CurrentScene;
+			var stackFrame = new StackFrame(1);
+			Mathias.Utilities.Debug.Log($"Killed by {stackFrame.GetMethod().DeclaringType?.Name}");
+
+			var gameScene = SceneManager.Instance.GetActiveScene<GameScene>();
 			
 			if (!File.Exists(scoreFilePath))
 			{

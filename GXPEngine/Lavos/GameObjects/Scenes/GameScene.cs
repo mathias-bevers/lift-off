@@ -1,5 +1,6 @@
 ﻿using System;
 using GXPEngine;
+using Mathias.Utilities;
 
 namespace Lavos
 {
@@ -28,7 +29,7 @@ namespace Lavos
 			foreground.SetCollider();
 			AddChild(foreground);
 
-			Player = new Player("triangle.png", 1, 1);
+			Player = new Player("MainCharacterSpriteSheet.png", 8, 7);
 			AddChild(Player);
 
 			deploymentManager = new DeploymentManager();
@@ -48,20 +49,32 @@ namespace Lavos
 			int spawnInterval = TimeSurvived - lastLaserSpawnTime;
 			if (spawnInterval < 3000) { return; }
 
-			int nextLane = new Random(spawnInterval).Next(0, DeploymentManager.LANES_COUNT);
-			var laser = new LaserBeam("laser-beam.png", 1, 5, nextLane);
-			laser.SetXY(0, GetLaneBottom(nextLane) - laser.height);
+			int nextLane = new Random().Next(0, DeploymentManager.LANES_COUNT);
+			var laser = new LaserBeam("LaserSpritesheet.png", 9, 1, nextLane);
+			laser.SetXY(game.width - laser.width, GetLaneCenter(nextLane) - (laser.height * 0.5f));
+			laser.AddMotor();
 			AddChild(laser);
-
 			lastLaserSpawnTime = TimeSurvived;
+			Debug.Log($"Spawned laser beam in lane {nextLane}.");
 		}
 
 		public float GetLaneBottom(int laneNumber)
 		{
 			float allLanes = game.height * 0.27375f;
 			float laneSize = allLanes / 3.0f;
+			float result = game.height - (laneSize * laneNumber);
 
-			return game.height - (laneSize * laneNumber);
+			return result;
+		}
+
+		public float GetLaneCenter(int laneNumber)
+		{
+			float allLanes = game.height * 0.27375f;
+			float laneSize = allLanes / 3.0f;
+			float laneCenter = laneSize * 0.5f;
+			float result = game.height - laneCenter - (laneSize * laneNumber);
+
+			return result;
 		}
 	}
 }

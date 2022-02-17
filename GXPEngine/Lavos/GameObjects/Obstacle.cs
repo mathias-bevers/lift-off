@@ -22,7 +22,7 @@ namespace Lavos
 
 		protected override void OnPlayerCollision()
 		{
-			if (!player.IsUsingAbility || player.AbilityType != AbilityType.Strength) { MyGame.Instance.PlayerDied(); }
+			//if (!player.IsUsingAbility || player.AbilityType != AbilityType.Strength) { MyGame.Instance.PlayerDied(); }
 
 			Destroy();
 		}

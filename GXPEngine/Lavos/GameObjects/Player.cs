@@ -41,9 +41,7 @@ namespace Lavos
 		{
 			SetCollider();
 
-			float allLanes = game.height * 0.27375f;
-			float laneSize = allLanes / 3.0f;
-			currentLaneBottom = game.height - laneSize;
+			currentLaneBottom = 672;
 
 			SetXY(game.width * 0.1f, currentLaneBottom);
 		}
@@ -67,6 +65,8 @@ namespace Lavos
 			y = currentLaneBottom;
 			velocity = 0;
 			isGrounded = true;
+
+			Animate(0.1f);
 		}
 
 		private void ProcessVerticalInput()
@@ -129,6 +129,14 @@ namespace Lavos
 		{
 			AbilityType = pickup.AbilityType;
 			abilityUsageTimeLeft = MAX_ABILITY_USE_TIME;
+		}
+
+		public override void Animate(float deltaFrameTime = 1)
+		{
+			if (!isGrounded) { SetCycle(0); }
+			else { SetCycle(4, 12); }
+
+			base.Animate(deltaFrameTime);
 		}
 	}
 }
