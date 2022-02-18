@@ -15,23 +15,21 @@ namespace Lavos
 
 		public override void Start()
 		{
-			var buttonSize = new Vector2(140, 40);
+			AddChild(new Sprite("start-background.png"));
 
-			var replayButton = new Button("White1x1.png", buttonSize, "Replay", new Vector2(271.5f, 366));
-			replayButton.TextDraw.SetColor(1, 0, 1);
-			replayButton.OnClicked += () => SceneManager.Instance.LoadScene("game");
-			AddChild(replayButton);
+			var startButton = new Button("Replay.png", position: new Vector2(game.width * 0.5f, game.height * 0.6f));
+			startButton.OnClicked += () => SceneManager.Instance.LoadScene("game");
+			AddChild(startButton);
 
 
-			var quitButton = new Button("White1x1.png", buttonSize, "Quit", new Vector2(271.5f, 432));
-			quitButton.TextDraw.SetColor(0, 1, 1);
+			var quitButton = new Button("Quit.png", position: new Vector2(game.width * 0.5f, game.height * 0.75f));
 			quitButton.OnClicked += game.Destroy;
 			AddChild(quitButton);
 
 			float[] scores = ReadScores();
 
 			var playerScore = new EasyDraw(250, 40);
-			playerScore.SetXY((game.width * 0.5f) - (playerScore.width * 0.5f), 25);
+			playerScore.SetXY(800, 125);
 			playerScore.TextAlign(CenterMode.Center, CenterMode.Center);
 			playerScore.TextSize(24);
 			playerScore.Text($"You scored {scores.Last():n2}");
@@ -40,14 +38,20 @@ namespace Lavos
 			Array.Sort(scores);
 			Array.Reverse(scores);
 
+
+			var highScoresText = new EasyDraw(200, 40);
+			highScoresText.SetXY(965, 375);
+			highScoresText.Text("HIGH SCORES: ");
+			highScoresText.TextSize(24);
+			AddChild(highScoresText);
+
 			var scoreTextSize = new Vector2(200, 40);
-			float startY = (game.height * 0.5f) - (scoreTextSize.y * 0.5f); // Placed in the middle of the screen.
-			startY -= scoreTextSize.y * 1.1f;
+			const float startY = 425;
 
 			for (var i = 0; i < (scores.Length < 3 ? scores.Length : 3); i++)
 			{
-				var highScore = new EasyDraw((int) scoreTextSize.x, (int) scoreTextSize.y);
-				highScore.SetXY(game.width * 0.5f, startY + (highScore.height * 1.1f * i));
+				var highScore = new EasyDraw((int)scoreTextSize.x, (int)scoreTextSize.y);
+				highScore.SetXY(965, startY + (highScore.height * 1.1f * i));
 				highScore.TextAlign(CenterMode.Min, CenterMode.Center);
 				highScore.Text($"{i + 1}: {scores[i]:n2}");
 				AddChild(highScore);
@@ -65,6 +69,11 @@ namespace Lavos
 			}
 
 			return scores.ToArray();
+		}
+
+		private void Update()
+		{
+			if (Input.GetMouseButtonDown(2)) { Debug.Log($"Mouse x:{Input.mouseX}, y:{Input.mouseY}"); }
 		}
 	}
 }
