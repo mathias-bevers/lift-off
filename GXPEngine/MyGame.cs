@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 using GXPEngine;
-using Mathias.Utilities;
+using GXPEngine.Core;
 
 namespace Lavos
 {
@@ -10,7 +10,7 @@ namespace Lavos
 		public readonly string scoreFilePath;
 
 		public static MyGame Instance => main as MyGame;
-		public Player Player { get; set; }
+		private readonly Sound dieSound;
 
 		public MyGame() : base(1366, 800, false) //TODO: Check if the resolution is correct.
 		{
@@ -21,12 +21,15 @@ namespace Lavos
 			AddChild(sceneManager);
 			sceneManager.LoadScene("main-menu");
 
-			scoreFilePath = Directory.GetCurrentDirectory() + "\\high-scores.txt";
+			scoreFilePath = Directory.GetCurrentDirectory() + @"\high-scores.txt";
+			dieSound = new Sound(@"sounds\die.wav");
 		}
 
 		private void Update()
 		{
 			if (Input.GetKey(Key.ESCAPE)) { Destroy(); }
+
+			if (Input.GetKeyDown(Key.C)) { Collision.drawCollision = !Collision.drawCollision; }
 		}
 
 		private static void Main()
@@ -37,19 +40,10 @@ namespace Lavos
 			Console.ReadLine();
 		}
 
-		public float GetLaneCenter(int laneNumber)
-		{
-			float halfScreen = height * 0.5f;
-			float laneSize = halfScreen / 3.0f;
-			float laneCenter = laneSize * 0.5f;
-
-			return game.height - laneCenter - (laneSize * laneNumber);
-		}
-
 		public void PlayerDied()
 		{
-			var gameScene = (GameScene)SceneManager.Instance.CurrentScene;
-			
+			dieSound.Play();
+			var gameScene = SceneManager.Instance.GetActiveScene<GameScene>();
 
 			if (!File.Exists(scoreFilePath))
 			{

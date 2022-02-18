@@ -1,5 +1,5 @@
-# Project 1.3 name tbd
-This project is made for Saxion's Creative Media & Game Technologies study term 1.3. The project assignment was to make a arcade game. This is our take on it.
+# Project 1.3 NEON CHASE
+This project is made for Saxion's Creative Media & Game Technologies study term 1.3. The project assignment was to make a arcade game. We decided to make an end-less runner in a outrun theme.
 
 ## Developers
 | Name | Role |
@@ -11,5 +11,5 @@ This project is made for Saxion's Creative Media & Game Technologies study term 
 | Daniel Roelofs | Artist |
 | Petar Trichkov  | Designer |
 
-## Gameplay preview
-<img scr="gameplay-preview.gif" alt="gameplay preview" width=800 height=1366/>
+## Gameplay Trailer
+Uploading gameplay trailer.mp4…

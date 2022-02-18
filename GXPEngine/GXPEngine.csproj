@@ -43,22 +43,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Lavos\GameObjects\AbilityType.cs" />
+    <Compile Include="Lavos\GameObjects\LaserBeam.cs" />
+    <Compile Include="Lavos\GameObjects\ParallaxManager.cs" />
+    <Compile Include="Lavos\GameObjects\Pickup.cs" />
+    <Compile Include="Lavos\GameObjects\AbstractClasses\Scene.cs" />
+    <Compile Include="Lavos\GameObjects\Obstacle.cs" />
+    <Compile Include="Lavos\GameObjects\DeploymentManager.cs" />
+    <Compile Include="Lavos\GameObjects\SceneManager.cs" />
+    <Compile Include="Lavos\GameObjects\Button.cs" />
+    <Compile Include="Lavos\GameObjects\GameHUD.cs" />
+    <Compile Include="Lavos\GameObjects\Player.cs" />
+    <Compile Include="Lavos\GameObjects\AbstractClasses\Deployable.cs" />
+    <Compile Include="Lavos\GameObjects\Scenes\GameOverScene.cs" />
+    <Compile Include="Lavos\GameObjects\Scenes\GameScene.cs" />
+    <Compile Include="Lavos\GameObjects\Scenes\MainMenuScene.cs" />
+    <Compile Include="Lavos\Utilities\EnumExtensions.cs" />
+    <Compile Include="Lavos\GameObjects\ParallaxManager.cs" />
+    <Compile Include="MyGame.cs" />
+    <Compile Include="GXPEngine\Game.cs" />
     <Compile Include="GXPEngine\AddOns\Gizmos.cs" />
     <Compile Include="GXPEngine\AddOns\SpriteBatch.cs" />
     <Compile Include="GXPEngine\AddOns\TiledLoader.cs" />
-    <Compile Include="GXPEngine\Utils\Debug.cs" />
-    <Compile Include="Lavos\BaseClasses\Scene.cs" />
-    <Compile Include="Lavos\Obstacle.cs" />
-    <Compile Include="Lavos\ObstacleManager.cs" />
-    <Compile Include="Lavos\SceneManager.cs" />
-    <Compile Include="Lavos\Button.cs" />
-    <Compile Include="Lavos\Scenes\GameOverScene.cs" />
-    <Compile Include="Lavos\Scenes\GameScene.cs" />
-    <Compile Include="Lavos\Scenes\MainMenuScene.cs" />
-    <Compile Include="Lavos\Utilities\EnumExtensions.cs" />
-    <Compile Include="MyGame.cs" />
     <Compile Include="GXPEngine\Core\Canvas.cs" />
-    <Compile Include="GXPEngine\Game.cs" />
+    <Compile Include="GXPEngine\Utils\Debug.cs" />
     <Compile Include="GXPEngine\GameObject.cs" />
     <Compile Include="GXPEngine\Sound.cs" />
     <Compile Include="GXPEngine\SoundChannel.cs" />
@@ -94,7 +102,6 @@
     <Compile Include="GXPEngine\FMOD\FMODSoundSystem.cs" />
     <Compile Include="GXPEngine\SoLoud\Soloud.cs" />
     <Compile Include="GXPEngine\SoLoud\SoloudSoundSystem.cs" />
-    <Compile Include="Lavos\Player.cs" />
   </ItemGroup>
   <ItemGroup />
 </Project>
