@@ -12,3 +12,4 @@ This project is made for Saxion's Creative Media & Game Technologies study term 
 | Petar Trichkov  | Designer |
 
 ## Gameplay Trailer
+Uploading gameplay trailer.mp4…
