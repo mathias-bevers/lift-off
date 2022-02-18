@@ -28,6 +28,9 @@ namespace Lavos
 		{
 			AddChild(new Sprite("game-background.png"));
 
+			var parallaxManager = new ParallaxManager();
+			AddChild(parallaxManager);
+
 			var foreground = new Sprite("foreground.png");
 			foreground.SetXY(0, game.height - foreground.height);
 			foreground.SetCollider();
