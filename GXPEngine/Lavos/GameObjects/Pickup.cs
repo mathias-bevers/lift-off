@@ -5,8 +5,6 @@ namespace Lavos
 {
 	public class Pickup : Deployable
 	{
-		public const int LANE_SIZE = 73;
-
 		public AbilityType AbilityType { get; }
 
 		public Pickup(int laneNumber, float speed) : base(laneNumber, speed)

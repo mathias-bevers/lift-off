@@ -6,8 +6,8 @@ namespace Lavos
 {
 	public class ParallaxManager : GameObject
 	{
+		private readonly int scrollSpeed = 40;
 		private readonly Sprite[] citySprites;
-		private int scrollSpeed = 40;
 
 		public ParallaxManager()
 		{

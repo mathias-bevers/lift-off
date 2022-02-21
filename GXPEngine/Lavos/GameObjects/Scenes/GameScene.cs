@@ -1,6 +1,5 @@
 ﻿using System;
 using GXPEngine;
-using Mathias.Utilities;
 
 namespace Lavos
 {
@@ -10,6 +9,7 @@ namespace Lavos
 
 		public float Score => (TimeSurvived / 1000.0f) *
 		                      (deploymentManager.DeployableSpeed - (deploymentManager.DeployableSpeed - 1.0f));
+
 		public int TimeSurvived { get; private set; }
 		public Player Player { get; private set; }
 		public override string Name { get; protected set; } = "game";
@@ -58,7 +58,7 @@ namespace Lavos
 			if (spawnInterval < 3000) { return; }
 
 			int nextLane = new Random().Next(0, DeploymentManager.LANES_COUNT);
-			var laser = new LaserBeam(@"assets\LaserSpritesheet.png", 9, 1, nextLane);
+			var laser = new LaserBeam(nextLane);
 			laser.SetScaleXY(1.5f, 1);
 			laser.SetXY(game.width - laser.width, GetLaneCenter(nextLane) - (laser.height * 0.5f));
 			AddChild(laser);

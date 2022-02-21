@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using GXPEngine;
 using GXPEngine.Core;
@@ -8,9 +7,9 @@ namespace Lavos
 	public sealed class MyGame : Game
 	{
 		public readonly string scoreFilePath;
+		private readonly Sound dieSound;
 
 		public static MyGame Instance => main as MyGame;
-		private readonly Sound dieSound;
 
 		public MyGame() : base(1366, 800, false) //TODO: Check if the resolution is correct.
 		{
@@ -32,13 +31,7 @@ namespace Lavos
 			if (Input.GetKeyDown(Key.C)) { Collision.drawCollision = !Collision.drawCollision; }
 		}
 
-		private static void Main()
-		{
-			new MyGame().Start();
-
-			Console.Write("Press enter to exit...");
-			Console.ReadLine();
-		}
+		private static void Main() { new MyGame().Start(); }
 
 		public void PlayerDied()
 		{

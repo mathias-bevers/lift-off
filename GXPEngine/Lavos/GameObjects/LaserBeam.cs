@@ -4,7 +4,7 @@ namespace Lavos
 {
 	public class LaserBeam : AnimationSprite
 	{
-		private const int DEADLY_FRAME = 4; //TODO change this value.
+		private const int DEADLY_FRAME = 4;
 
 		private readonly AnimationSprite motor;
 		private readonly int laneNumber;
@@ -13,12 +13,12 @@ namespace Lavos
 
 		private readonly SoundChannel soundChannel;
 
-		public LaserBeam(string filename, int columns, int rows, int laneNumber) : base(filename, columns, rows)
+		public LaserBeam(int laneNumber) : base(@"assets\LaserSpritesheet.png", 9, 1)
 		{
 			this.laneNumber = laneNumber;
 			player = SceneManager.Instance.GetActiveScene<GameScene>().Player;
 
-			lastFrame = (columns * rows) - 1;
+			lastFrame = (_cols * _rows) - 1;
 			SetCycle(0, lastFrame + 1);
 
 			motor = new AnimationSprite(@"assets\enemyMotorcycleSpritesheet.png", 3, 1);

@@ -4,8 +4,8 @@ namespace Lavos
 {
 	public class GameHUD : GameObject
 	{
-		private readonly EasyDraw chipsText;
 		private readonly EasyDraw abilityText;
+		private readonly EasyDraw chipsText;
 		private readonly EasyDraw scoreText;
 		private readonly GameScene gameScene;
 		private readonly Sprite abilityBar;
@@ -40,10 +40,7 @@ namespace Lavos
 			UpdateUI();
 		}
 
-		private void Update()
-		{
-			UpdateUI();
-		}
+		private void Update() { UpdateUI(); }
 
 		private void UpdateUI()
 		{
