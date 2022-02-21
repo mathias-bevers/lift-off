@@ -11,7 +11,7 @@ namespace Lavos
 
 		public ParallaxManager()
 		{
-			string folderPath = Directory.GetCurrentDirectory() + @"\cities";
+			string folderPath = Directory.GetCurrentDirectory() + @"\assets\cities";
 			string[] spriteNames = Directory.GetFiles(folderPath, "*.png")
 				.Select(spritePath => spritePath.Split('\\').Last())
 				.ToArray();
@@ -19,7 +19,7 @@ namespace Lavos
 			citySprites = new Sprite[spriteNames.Length];
 			for (var i = 0; i < spriteNames.Length; i++)
 			{
-				var citySprite = new Sprite(@$"cities\{spriteNames[i]}");
+				var citySprite = new Sprite($@"assets\cities\{spriteNames[i]}");
 				citySprites[i] = citySprite;
 				citySprite.SetXY(citySprite.width * i, 20);
 				AddChild(citySprite);

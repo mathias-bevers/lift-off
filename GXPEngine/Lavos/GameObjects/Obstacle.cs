@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using GXPEngine;
 
 namespace Lavos
 {
@@ -12,10 +11,11 @@ namespace Lavos
 
 		public Obstacle(int laneNumber, float speed) : base(laneNumber, speed)
 		{
-			_folderPath ??= Directory.GetCurrentDirectory() + @"\obstacles";
+			_folderPath ??= Directory.GetCurrentDirectory() + @"\assets\obstacles";
 			_imagePaths ??= Directory.GetFiles(_folderPath, "*.png");
 
-			string fileName = @"obstacles\" + _imagePaths[new Random(DateTime.Now.Millisecond).Next(0, _imagePaths.Length)].Split('\\').Last();
+			string fileName = @"assets\obstacles\" +
+			                  _imagePaths[new Random(DateTime.Now.Millisecond).Next(0, _imagePaths.Length)].Split('\\').Last();
 			SetupSprite(fileName);
 		}
 

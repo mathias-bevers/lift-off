@@ -21,11 +21,11 @@ namespace Lavos
 			lastFrame = (columns * rows) - 1;
 			SetCycle(0, lastFrame + 1);
 
-			motor = new AnimationSprite("enemyMotorcycleSpritesheet.png", 3, 1);
+			motor = new AnimationSprite(@"assets\enemyMotorcycleSpritesheet.png", 3, 1);
 			AddChild(motor);
 			motor.SetXY(width - motor.width, -motor.height * 0.5f);
 
-			soundChannel = new Sound(@"sounds\laser fire.wav").Play();
+			soundChannel = new Sound(@"assets\sounds\laser fire.wav").Play();
 		}
 
 		private void Update()

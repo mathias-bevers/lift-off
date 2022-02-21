@@ -15,14 +15,14 @@ namespace Lavos
 
 		public override void Start()
 		{
-			AddChild(new Sprite("start-background.png"));
+			AddChild(new Sprite(@"assets\start-background.png"){width = game.width, height = game.height});
 
-			var startButton = new Button("Replay.png", position: new Vector2(game.width * 0.5f, game.height * 0.6f));
+			var startButton = new Button(@"assets\Replay.png", position: new Vector2(game.width * 0.5f, game.height * 0.6f));
 			startButton.OnClicked += () => SceneManager.Instance.LoadScene("game");
 			AddChild(startButton);
 
 
-			var quitButton = new Button("Quit.png", position: new Vector2(game.width * 0.5f, game.height * 0.75f));
+			var quitButton = new Button(@"assets\Quit.png", position: new Vector2(game.width * 0.5f, game.height * 0.75f));
 			quitButton.OnClicked += game.Destroy;
 			AddChild(quitButton);
 
@@ -58,7 +58,7 @@ namespace Lavos
 			}
 		}
 
-		private float[] ReadScores()
+		private static float[] ReadScores()
 		{
 			var scores = new List<float>();
 
@@ -69,11 +69,6 @@ namespace Lavos
 			}
 
 			return scores.ToArray();
-		}
-
-		private void Update()
-		{
-			if (Input.GetMouseButtonDown(2)) { Debug.Log($"Mouse x:{Input.mouseX}, y:{Input.mouseY}"); }
 		}
 	}
 }

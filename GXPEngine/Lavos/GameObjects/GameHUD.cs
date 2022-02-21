@@ -19,7 +19,7 @@ namespace Lavos
 			chipsText.SetXY(10, 10);
 			AddChild(chipsText);
 
-			var scoreBG = new Sprite("scoreUI.png") { width = 200, height = 50 };
+			var scoreBG = new Sprite(@"assets\scoreUI.png") { width = 200, height = 50 };
 			scoreBG.SetXY((game.width * 0.5f) - (scoreBG.width * 0.5f), 10);
 			AddChild(scoreBG);
 
@@ -33,7 +33,7 @@ namespace Lavos
 			abilityText.SetXY(game.width - abilityText.width - 10, 10);
 			AddChild(abilityText);
 
-			abilityBar = new Sprite("White1x1.png") { width = 200, height = 25 };
+			abilityBar = new Sprite(@"assets\White1x1.png") { width = 200, height = 25 };
 			abilityBar.SetXY(game.width - abilityBar.width - 10, 10 + abilityText.height + 10);
 			AddChild(abilityBar);
 

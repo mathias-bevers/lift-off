@@ -13,13 +13,13 @@ namespace Lavos
 		{
 			AbilityType = AbilityType.Random(Time.time);
 
-			string fileName = "pickup-" + AbilityType.ToString().ToLower() + ".png";
+			string fileName = @"assets\pickup-" + AbilityType.ToString().ToLower() + ".png";
 			SetupSprite(fileName);
 		}
 
 		protected override void OnPlayerCollision()
 		{
-			new Sound(@"sounds\pickup powerup.wav").Play();
+			new Sound(@"assets\sounds\pickup powerup.wav").Play();
 
 			player.PickedUpPickup(this);
 

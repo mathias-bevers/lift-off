@@ -21,8 +21,8 @@ namespace Lavos
 			AddChild(sceneManager);
 			sceneManager.LoadScene("main-menu");
 
-			scoreFilePath = Directory.GetCurrentDirectory() + @"\high-scores.txt";
-			dieSound = new Sound(@"sounds\die.wav");
+			scoreFilePath = Directory.GetCurrentDirectory() + @"\assets\high-scores.txt";
+			dieSound = new Sound(@"assets\sounds\die.wav");
 		}
 
 		private void Update()

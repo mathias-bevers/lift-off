@@ -20,23 +20,23 @@ namespace Lavos
 
 		public GameScene()
 		{
-			themeSC = new Sound(@"sounds\theme-iteration7.wav", true).Play();
+			themeSC = new Sound(@"assets\sounds\theme-iteration7.wav", true).Play();
 			Start();
 		}
 
 		public override void Start()
 		{
-			AddChild(new Sprite("game-background.png"));
+			AddChild(new Sprite(@"assets\game-background.png"));
 
 			var parallaxManager = new ParallaxManager();
 			AddChild(parallaxManager);
 
-			var foreground = new Sprite("foreground.png");
+			var foreground = new Sprite(@"assets\foreground.png");
 			foreground.SetXY(0, game.height - foreground.height);
 			foreground.SetCollider();
 			AddChild(foreground);
 
-			Player = new Player("MainCharacterSpriteSheet.png", 8, 7);
+			Player = new Player(@"assets\MainCharacterSpriteSheet.png", 8, 7);
 			AddChild(Player);
 
 			deploymentManager = new DeploymentManager();
@@ -58,7 +58,7 @@ namespace Lavos
 			if (spawnInterval < 3000) { return; }
 
 			int nextLane = new Random().Next(0, DeploymentManager.LANES_COUNT);
-			var laser = new LaserBeam("LaserSpritesheet.png", 9, 1, nextLane);
+			var laser = new LaserBeam(@"assets\LaserSpritesheet.png", 9, 1, nextLane);
 			laser.SetScaleXY(1.5f, 1);
 			laser.SetXY(game.width - laser.width, GetLaneCenter(nextLane) - (laser.height * 0.5f));
 			AddChild(laser);
