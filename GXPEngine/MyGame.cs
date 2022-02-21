@@ -49,11 +49,13 @@ namespace Lavos
 			{
 				using StreamWriter writer = File.CreateText(scoreFilePath);
 				writer.WriteLine(gameScene.Score);
+				writer.Close();
 			}
 			else
 			{
 				using StreamWriter writer = File.AppendText(scoreFilePath);
 				writer.WriteLine(gameScene.Score);
+				writer.Close();
 			}
 
 			SceneManager.Instance.LoadScene("game-over");
